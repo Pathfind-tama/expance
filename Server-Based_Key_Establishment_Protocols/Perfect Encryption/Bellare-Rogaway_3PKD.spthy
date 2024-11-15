@@ -1,0 +1,110 @@
+theory 3PKDP_opt begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: na
+ 2. B -> S: na,nb  
+ 3. S -> A: {kab}kas,{A,B,na,{kab}kas}kas
+ 4. S -> B: {kab}kbs,{A,B,nb,{kab}kbs}kbs
+
+*/
+functions: enc/2, dec/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ AS1($A,$B,~na), Out(~na) ]
+
+rule BS2:
+  [ In(na),Fr(~nb),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [ BS2($A,$B,na,~nb), Out(<na,~nb>) ]
+
+rule SAB3:
+let
+	cas=enc(~kab,kas)
+	cbs=enc(~kab,kbs)
+	c1=enc(<$A,<$B,<na,cas>>>,kas)
+	c2=enc(<$A,<$B,<nb,cbs>>>,kbs)
+	respon=<cas,c1,cbs,c2>
+in
+  [ In(<na,nb>),Fr(~kab),!SharedKeyWithServer($A,kas),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [  Out(respon) ,!Share($A,kas,$B,kbs,~kab)]
+
+rule Aaff:
+let
+	kab=dec(cas,kas)
+	m=dec(c1,kas)
+	nas=fst(snd(snd(m)))
+	cass=snd(snd(snd(m)))
+in
+  [ AS1($A,$B,na),In(<cas,c1>),!SharedKeyWithServer($A,kas)]
+--[ Eq(nas,na),Eq(cass,cas) ]->
+  [ ]
+
+rule Baff:
+let
+	kab=dec(cbs,kbs)
+	m=dec(c2,kbs)
+	nbs=fst(snd(snd(m)))
+	cbss=snd(snd(snd(m)))
+in
+  [ BS2($A,$B,na,nb),In(<cbs,c2>),!SharedKeyWithServer($B,kbs)]
+--[ Eq(nbs,nb),Eq(cbss,cbs) ]->
+  [ ]
+
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A,kas)]
+  --[ Eq(c,enc(m,kas)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+#ifdef timethis
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+#endif
+end
+

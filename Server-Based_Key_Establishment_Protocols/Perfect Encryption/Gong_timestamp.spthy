@@ -1,0 +1,74 @@
+theory Gongtime begin
+
+
+functions: enc/2, dec/2, Mac/3
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A,~k) ]
+
+rule Initiator1Request:
+let
+    c=enc(<<<<<$A,$S>,$A>,~k1>,$B>,~ta>,kas)
+in
+  [ !SharedKeyWithServer($A,kas) ,Fr(~k1),Fr(~ta)]
+--[  ]->
+  [ InitiatorRequested($A,$B), Out(<$A,$B,c>) ]
+
+rule Server:
+let
+	m1=dec(c,kas)
+	k1=snd(fst(fst(m1)))
+	c2=enc(<<<<<$S,$B>,$A>,k1>,$B>,~ts>,kbs)
+in
+  [ In(<$A,$B,c>),Fr(~ts),!SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)]
+--[ ]->
+  [ Out(c2)]
+
+rule B2S:
+let
+	m2=dec(c2,kbs)
+	Name=snd(fst(m2))
+	c=enc(<<<<<$B,$S>,$B>,~k2>,$A>,~tb>,kbs)
+in
+  [ In(c2), !SharedKeyWithServer($B,kbs),Fr(~tb),Fr(~k2)]
+--[ Eq(Name,$B)]->
+  [ Out(c) ]
+
+rule S2A:
+let
+	m2=dec(c,kbs)
+	Name=snd(fst(m2))
+	k2=snd(fst(fst(m2)))
+	c2=enc(<<<<<$S,$A>,$B>,k2>,$A>,~tb>,kbs)
+in
+  [ In(c), !SharedKeyWithServer($A,kas),Fr(~tb),!SharedKeyWithServer($B,kbs)]
+--[ Eq(Name,$A)]->
+  [ Out(c2) ]
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A, kas) ]
+  --[ Eq(c,enc(m,kas)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

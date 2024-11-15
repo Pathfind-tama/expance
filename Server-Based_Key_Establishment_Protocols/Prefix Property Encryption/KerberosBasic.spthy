@@ -1,0 +1,180 @@
+theory KerberosBasic
+begin
+
+
+builtins: hashing
+
+functions: enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M,
+  prefix(enc(<X,Y>, k)) = enc(X, k)
+
+
+/*
+C: Client
+ A: Authentication Server
+ G: Ticket Granting Server
+ S: Server (that the client wants to talk to)
+
+ K_AB: key shared or intended to be shared between A and B
+	   Initially shared: K_CA, K_AG, K_GS
+	   Established during protocol: K_CG, K_CS
+
+
+ All things marked * are timestamp-related and will be simply replaced
+ with fresh text.
+
+
+ Macros:
+ Ticket_1 := { C,G, K_CG, Tstart*, Texpire* }K_AG
+ Ticket_2 := { C,S, K_CS, Tstart2*, Texpire2* }K_GS
+
+
+ 1. C -> A : C,G,Lifetime_1*,N_1
+ 2. A -> C : C, Ticket_1, { G, K_CG, Tstart*, Texpire*, N_1 }K_CA
+
+
+ 3. C -> G : S,Lifetime_2*,N_2,Ticket_1, { C,T* }K_CG
+ 4. G -> C : C, Ticket_2, { S, K_CS, Tstart2*, Texpire2*, N_2 }K_CG
+
+
+ 5. C -> S : Ticket_2, { C, T2* }K_CS
+ 6. S -> C : { T2* }K_CS
+
+*/
+rule Register_SK:
+  [ Fr(~Key_XY) ]
+  -->
+  [ !Shared($X, $Y, ~Key_XY)]
+
+
+rule Parties:
+  []
+  -->
+  [ !Parties($A,$C,$G,$S) ]
+
+rule Client_1: //C
+  [ Fr(~N_1),
+	!Parties(A,C,G,S)]
+  -->
+  [ Out(<C,G,~N_1>),Client_1(C,G,~N_1) ]
+
+rule AuthServ_1://A
+  let
+	Ticket_1 = enc(<<~Key_CG,~Tstart>,C> ,Key_AG)
+  in
+  [ Fr(~Tstart),
+	Fr(~Key_CG),
+	!Shared(A, G, Key_AG),
+	!Shared(C, A, Key_CA),
+	In(<C, G, N_1>)
+  ]
+  -->
+  [
+	Out(<C, Ticket_1, enc(<<<~Key_CG,N_1>,~Tstart>,G>,Key_CA) >)
+  ]
+
+rule Client_2://C
+let
+	m     = dec(cipher,Key_CA)
+	N_1   = snd(fst(fst(m)))
+	Key_CG= fst(fst(fst(m)))
+	Gs    = snd(m)
+in
+  [ Fr(~N_2),
+	Fr(~T),
+	!Parties(A, C, G, S),
+	!Shared(C, A, Key_CA),
+	In(<C, Ticket_1, cipher>),
+	Client_1(C,G,N_1s)
+  ]
+  --[ Eq(N_1,N_1s),Eq(Gs,G) ]->
+  [ Out(< Ticket_1, enc(<C, ~T>,Key_CG),S,  ~N_2 >), Client_2(C,~N_2,Key_CG)]
+
+rule GrantingServ_1://G
+  let
+	mm	= dec(Ticket_1,Key_AG)
+	Key_CG = fst(fst(mm))
+	Cs = snd(mm)
+	m =dec(cipher,Key_CG)
+	Css = fst(m)
+	Ticket_2 = enc(<<~Key_CS, ~Tstart2>,C>,Key_GS)
+
+  in
+  [ Fr(~Tstart2),
+	Fr(~Key_CS),
+	!Parties(A, C, G, S),
+	!Shared(A, G, Key_AG),
+	!Shared(G, S, Key_GS),
+	In(< Ticket_1, cipher, S, N_2 >) ]
+  --[ Eq(Cs,Css)]->
+  [ Out(< C, Ticket_2, enc(<<<~Key_CS,N_2>,~Tstart2>,S>,Key_CG) >) ,!ATTACKT(~Key_CS) ]
+
+rule Client_3://C
+let
+	m=dec(cipher,Key_CG)
+	Key_CS = fst(fst(fst(m)))
+	N_2 = snd(fst(fst(m)))
+in
+  [ Fr(~T2),
+	In(< Cs, Ticket_2, cipher>),
+	Client_2(C,N_2s,Key_CG)
+  ]
+  --[Eq(N_2s,N_2),Eq(Cs,C)]->
+  [ Out(< Ticket_2, enc(<C, ~T2>,Key_CS)>),Client_3(C,~T2,Key_CS)]
+
+
+rule Server_1: //S
+let
+	m=dec(Ticket_2,Key_GS)
+	Key_CS=fst(fst(m))
+	Cs=snd(m)
+	mm=dec(cipher,Key_CS)
+	Css=fst(mm)
+	T2=snd(mm)
+in
+  [
+	!Shared(G, S, Key_GS),In(< Ticket_2, cipher >)
+  ]
+  --[Eq(Cs,Css)]->
+  [
+	Out(<enc(T2,Key_CS)>)
+  ]
+
+
+rule Client_4: //C
+let
+	T2s=dec(cipher,Key_CS)
+in
+  [
+	In(cipher),Client_3(C,T2,Key_CS),
+	!Parties(A, C, G, S)
+  ]
+  --[ Eq(T2s,T2)]->
+  []
+
+axiom Equality_Checks_Succeed: "All x y #i. Eq(x,y) @ i ==> x = y "
+/*
+rule Attack_test1:
+    [ In(c),In(m),!Shared(A,B, k)]
+  --[ Eq(c,senc(m,k)),Attack_suc1() ]->
+    [ ]
+*/
+rule Attack_test2:
+    [ In(c),In(m),!ATTACKT(k)]
+  --[ Eq(c,enc(m,k)),Attack_suc2() ]->
+    [ ]    
+/*
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc1()@j
+"
+*/
+lemma Test2:
+exists-trace
+"
+	Ex #j. Attack_suc2()@j
+"
+
+//Initially shared: K_CA, K_AG, K_GS
+end

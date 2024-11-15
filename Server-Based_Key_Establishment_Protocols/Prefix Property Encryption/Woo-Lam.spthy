@@ -1,0 +1,137 @@
+theory Woo_Lam begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: na
+ 2. B -> A: nb
+ 3. A -> B: {A,B,na,nb}kas 
+ 4. B -> S: {A,B,na,nb}kas,{A,B,na,nb}kbs
+ 5. S -> B: {B,na,nb,kab}kas,{A,na,nb,kab}kbs
+ 6. B -> A: {B,na,nb,kab}kas,{na,nb}kab
+ 7. S -> B: {nb}kab
+
+*/
+functions: enc/2, dec/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ AB1($A,$B,~na), Out(~na) ]
+
+rule BA2:
+  [ In(na),Fr(~nb),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [ BA2($A,$B,na,~nb), Out(~nb) ]
+
+rule AB3:
+let
+  c = enc(<$A,<$B,<na,nb>>>,kas)
+in
+  [ AB1($A,$B,na),In(nb),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ AB3($A,$B,na,nb), Out(c) ]
+
+rule BS4:
+let
+  c = enc(<$A,<$B,<na,nb>>>,kbs)
+in
+  [ BA2($A,$B,na,nb),In(c),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [ BS4($A,$B,na,nb), Out(c) ]
+
+rule SB5:
+let
+	m1=dec(c1,kas)
+	m2=dec(c2,kbs)
+	naa=fst(snd(snd(m1)))
+	nba=snd(snd(snd(m1)))
+	nab=fst(snd(snd(m2)))
+	nbb=snd(snd(snd(m2)))
+	ca=enc(<$B,<naa,<nba,~kab>>>,~kab)
+	cb=enc(<$A,<naa,<nba,~kab>>>,~kab)
+	respon=<ca,cb>
+in
+  [ In(<c1,c2>),Fr(~kab),!SharedKeyWithServer($A,kas),!SharedKeyWithServer($B,kbs)]
+--[  Eq(naa,nab),Eq(nab,nbb)]->
+  [  Out(respon) ,!Share($A,kas,$B,kbs,~kab)]
+
+rule BA6:
+let
+	m=dec(cb,kbs)
+	nas=fst(snd(m))
+	nbs=fst(snd(snd(m)))
+	kab=snd(snd(snd(m)))
+	c=enc(<na,nb>,kab)
+in
+  [ BS4($A,$B,na,nb),In(<ca,cb>),!SharedKeyWithServer($B,kbs)]
+--[ Eq(nas,na),Eq(nbs,nb) ]->
+  [ Out(<ca,c>)]
+
+rule AB7:
+let
+	m=dec(ca,kas)
+	nas=fst(snd(m))
+	nbs=fst(snd(snd(m)))
+	kab=snd(snd(snd(m)))
+	m1=dec(c,kab)
+	nass=fst(m1)
+	nbss=snd(m1)
+in
+  [ AB3($A,$B,na,nb),In(<ca,c>),!SharedKeyWithServer($A,kas)]
+--[ Eq(nas,na),Eq(nbs,nb),Eq(nass,na),Eq(nbss,nb) ]->
+  [ ]
+
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A,kas)]
+  --[ Eq(c,enc(m,kas)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+#ifdef timethis
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+#endif
+end
+

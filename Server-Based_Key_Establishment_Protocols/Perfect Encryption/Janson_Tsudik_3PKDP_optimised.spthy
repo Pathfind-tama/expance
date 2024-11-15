@@ -1,0 +1,121 @@
+theory 3PKDP_opt begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A,na,na1
+ 2. B -> S: A,B,na,nb  
+ 3. S -> B: AUTHa,MASKa xor kab,AUTHb,MASKb xor kab
+ 4. B -> A: AUTHa,MASKa xor kab,{na1,nb1,B}kab,nb1
+ 5. A -> B: {na1,nb1,A}kab
+
+
+AUTHa = {na,kab,B}kas
+MASKa = {AUTHa}kas
+AUTHb = {nb,kab,A}kbs
+MASKb = {AUTHb}kbs
+*/
+builtins: xor
+functions: enc/2, dec/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),Fr(~na1),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ AS1($A,$B,~na,~na1), Out(<$A,~na,~na1>) ]
+
+rule BS2:
+  [ In(<$A,na,na1>),Fr(~nb),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [ BS2($A,$B,na,na1,~nb), Out(<$A,$B,na,~nb>) ]
+
+rule SB3:
+let
+	AUTHa=enc(<na,<~kab,$B>>,kas)
+	MASKa=enc(AUTHa,kas)
+	AUTHb=enc(<nb,<~kab,$A>>,kbs)
+	MASKb=enc(AUTHb,kbs)
+	respon=<AUTHa,MASKa XOR ~kab,AUTHb,MASKb XOR ~kab>
+in
+  [ In(<$A,$B,na,nb>),Fr(~kab),!SharedKeyWithServer($A,kas),!SharedKeyWithServer($B,kbs)]
+--[  ]->
+  [ SB3($A,$B,~kab), Out(respon) ,!Share($A,kas,$B,kbs,~kab)]
+
+rule BA4:
+let
+	m=dec(c3,kbs)
+	nbs=fst(m)
+	kab=fst(snd(m))
+	As=snd(snd(m))
+	MASKb = c4 XOR kab
+	c=enc(<na1,<~nb1,$B>>,kab)
+	respon=<c1,c2,c,~nb1>
+in
+  [ BS2($A,$B,na,na1,nb),In(<c1,c2,c3,c4>),Fr(~nb1),!SharedKeyWithServer($B,kbs)]
+--[ Eq(nbs,nb),Eq(MASKb,enc(c3,kbs)),Eq(As,$A) ]->
+  [ Out(respon) ]
+
+rule AB5:
+let
+	m=dec(c1,kas)
+	nas=fst(m)
+	kab=fst(snd(m))
+	MASKa = c2 XOR kab
+	m2=dec(c,kab)
+	na1s=fst(m2)
+	cr=enc(<na1,<nb1,$A>>,kab)
+in
+  [ AS1($A,$B,na,na1),!SharedKeyWithServer($A,kas),In(<c1,c2,c,nb1>)]
+--[ Eq(nas,na),Eq(MASKa,enc(c1,kas)) ,Eq(na1s,na1)]->
+  [ Out(cr) ]
+
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!Share($A,kas,$B,kbs,kab)]
+  --[ Eq(c,enc(m,kab)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+#ifdef timethis
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+#endif
+end
+

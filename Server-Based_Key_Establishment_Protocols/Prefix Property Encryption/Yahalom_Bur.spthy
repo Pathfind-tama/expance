@@ -1,0 +1,115 @@
+theory Yahalom_Burrows begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A, Na
+ 2. B -> S: B, Nb,{A,Na}Kbs
+ 3. S -> A: Nb,{B,Kab,Na}Kas, {A,Kab,Nb}Kbs
+ 4. A -> B: {A,Kab,Nb}Kbs, {Nb}Kab
+
+*/
+
+functions: enc/2, dec/2,prefix/1
+equations: dec(enc(M,k), k) = M,
+  prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule Initiator1Request:
+  [ Fr(~na),!SharedKeyWithServer($A,kas)]
+--[ Initate($A,$B, ~na) ]->
+  [ InitiatorRequested($A,$B, ~na), Out(<$A,~na>) ]
+
+rule B2S:
+let
+	req = <$A,na>
+	c = enc(<$A,na>,kbs)
+in
+  [ In(req) ,!SharedKeyWithServer($B,kbs),Fr(~nb)]
+--[  ]->
+  [ ResponderWaitConfirm($A,$B,~nb), Out(<$B,~nb,c>) ]
+
+
+rule Server:
+let
+	m=dec(c,kbs)
+	na=snd(m)
+
+	c1=enc(<<$B,~kab>,na>,kas)
+	c2=enc(<<$A,~kab>,nb>,kbs)
+	ser_responce=<nb,c1,c2>
+in
+  [ In(<$B,nb,c>), Fr(~kab), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ CreatedKey($A,$B,~kab) ]->
+  [ Out(ser_responce),!User($A,$B)]
+
+rule Initiator2KeyAndForward:
+let 
+	m=dec(c1,kas)
+	nas=snd(m)
+	kab=snd(fst(m))
+	c=enc(nb,kab)
+in 
+  [ In(<nb,c1,c2>) ,InitiatorRequested($A,$B, na), !SharedKeyWithServer($A, kas), !User($A,$B)
+  ]
+--[  Eq(nas,na)]->
+  [Out(<c2,c>) ]
+
+
+rule ResponderKeyConfirm:
+let
+	m=dec(c2,kbs)
+	kab=snd(fst(m))
+	nbs=snd(m)
+	nbss=dec(c,kab)
+in
+  [ In(<c2,c>), !SharedKeyWithServer($B,kbs), ResponderWaitConfirm($A,$B,nb)]
+--[ Eq(nbs,nb),Eq(nbss,nb),Eq(nbs,nbss)]->
+  [  ]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

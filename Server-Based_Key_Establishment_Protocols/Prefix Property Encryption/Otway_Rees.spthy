@@ -1,0 +1,116 @@
+theory Otway_Ress begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> S: M, A, B, {Na,M,A,B}Kas
+ 2. B -> S: M, A, B, {Na,M,A,B}Kas,  {Nb,M,A,B}Kbs
+ 3. S -> B: M, {Na, Kab}Kas, {Nb,Kab}Kbs
+ 4. B -> A: M, {Na, Kab}Kas
+
+*/
+
+functions: enc/2, dec/2,prefix/1
+equations: dec(enc(M,k), k) = M,
+  prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule Initiator1Request:
+let
+	c = enc(<<<~na,~m>,$A>,$B>,kas)
+in
+  [ Fr(~na),Fr(~m) ,!SharedKeyWithServer($A,kas)]
+--[ Initate($A,$B, ~na,~m) ]->
+  [ InitiatorRequested($A,$B, ~na,~m), Out(<~m,$A,$B,c>) ]
+
+rule B2S:
+let
+	req = <m,$A,$B,c>
+	c2 = enc(<<<~nb,m>,$A>,$B>,kbs)
+in
+  [ In(req) ,!SharedKeyWithServer($B,kbs),Fr(~nb)]
+--[  ]->
+  [ ResponderWaitConfirm($A,$B,~nb), Out(<m,$A,$B,c,c2>) ]
+
+
+rule Server:
+let
+	m1=dec(c,kas)
+	na=fst(fst(fst(m1)))
+	ms1=snd(fst(fst(m1)))
+	m2=dec(c2,kbs)
+  nb=fst(fst(fst(m2)))
+	ms2=snd(fst(fst(m2)))
+	c1=enc(<na,~kab>,kas)
+	c2s=enc(<nb,~kab>,kbs)
+	ser_responce=<m,c1,c2s>
+in
+  [ In(<m,$A,$B,c,c2>), Fr(~kab), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ CreatedKey($A,$B,~kab),Eq(ms2,m),Eq(ms1,m),Eq(ms2,ms1) ]->
+  [ Out(ser_responce),!User($A,$B)]
+
+rule ResponderKeyConfirm:
+let
+	m2=dec(c2,kbs)
+	nbs=fst(m2)
+in
+  [ In(<m,c1,c2>), !SharedKeyWithServer($B,kbs), ResponderWaitConfirm($A,$B,nb)]
+--[ Eq(nbs,nb)]->
+  [ Out(<m,c1>) ]
+
+rule Initiator2KeyAndForward:
+let 
+	m1=dec(c1,kas)
+	nas=fst(m1)
+in 
+  [ In(<ms,c1>) ,InitiatorRequested($A,$B, na,m), !SharedKeyWithServer($A, kas), !User($A,$B)
+  ]
+--[  Eq(nas,na),Eq(ms,m)]->
+  [ ]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

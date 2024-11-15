@@ -1,0 +1,60 @@
+theory DS begin
+
+
+functions: enc/2, dec/2, Mac/3
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+rule Initiator1Request:
+  [  ]
+--[ Initate($A,$B) ]->
+  [ InitiatorRequested($A,$B), Out(<$A, $B>) ]
+
+rule Server:
+let
+  c1=enc(<<$A,~kab>,~ts>,kbs)
+  c2=enc(<<<$B,~kab>,~ts>,c1>,kas)
+in
+  [ In(<$A,$B>), Fr(~ts),Fr(~kab), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ ]->
+  [ Out(c2),!User($A,$B)]
+
+rule A2B:
+let
+  m2=dec(c2,kas)
+  c=snd(m2)
+  Kab=snd(fst(fst(m2)))
+in
+  [ In(c2), !SharedKeyWithServer($A,kas) ,!User($A,$B)]
+--[ Eq(fst(fst(fst(m2))),$B)]->
+  [ Out(c) ]
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A, k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!SharedKeyWithServer($B, k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+
+lemma Test:
+exists-trace
+"
+  Ex #j. Attack_suc()@j
+"
+
+end
+

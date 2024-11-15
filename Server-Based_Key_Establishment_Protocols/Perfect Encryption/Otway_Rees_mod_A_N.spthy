@@ -1,0 +1,107 @@
+theory Otway_Ress_Aba_Need begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A, B, Na
+ 2. B -> S: A, B, Na, Nb
+ 3. S -> B: {Na, A, B,Kab}Kas, {Nb,A, B,Kab}Kbs
+ 4. B -> A: {Na, A, B,Kab}Kas
+
+*/
+
+functions: enc/2, dec/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+
+
+rule Initiator1Request:
+  [ Fr(~na),!SharedKeyWithServer($A,kas)]
+--[ Initate($A,$B, ~na) ]->
+  [ InitiatorRequested($A,$B, ~na), Out(<$A,$B,~na>) ]
+
+rule B2S:
+let
+	req = <$A,$B,na>
+in
+  [ In(req) ,!SharedKeyWithServer($B,kbs),Fr(~nb)]
+--[  ]->
+  [ ResponderWaitConfirm($A,$B,~nb), Out(<$A,$B,na,~nb>) ]
+
+
+rule Server:
+let
+	c1=enc(<na,<$A,<$B,~kab>>>,kas)
+  c2=enc(<nb,<$A,<$B,~kab>>>,kbs)
+	ser_responce=<c1,c2>
+in
+  [ In(<$A,$B,na,nb>), Fr(~kab), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ CreatedKey($A,$B,~kab) ]->
+  [ Out(ser_responce),!User($A,$B)]
+
+rule ResponderKeyConfirm:
+let
+	m2=dec(c2,kbs)
+	nbs=fst(m2)
+in
+  [ In(<c1,c2>), !SharedKeyWithServer($B,kbs), ResponderWaitConfirm($A,$B,nb)]
+--[ Eq(nbs,nb)]->
+  [ Out(c1) ]
+
+rule Initiator2KeyAndForward:
+let 
+	m1=dec(c1,kas)
+	nas=fst(m1)
+in 
+  [ In(c1) ,InitiatorRequested($A,$B, na), !SharedKeyWithServer($A, kas), !User($A,$B)
+  ]
+--[  Eq(nas,na)]->
+  [ ]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs)]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+#ifdef timethis
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+#endif
+end
+

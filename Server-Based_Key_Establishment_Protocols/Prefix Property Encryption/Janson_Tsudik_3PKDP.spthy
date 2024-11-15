@@ -1,0 +1,154 @@
+theory Yahalom_Burrows begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> S: A,B,na
+ 2. S -> A: AUTHa,MASKa xor kab
+ 3. A -> S: {na,kab,A}Kas
+ 4. B -> S: B,A,nb
+ 5. S -> B: AUTHb,MASKb xor kab
+ 6. B -> S: {nb,kab,B}Kbs 
+ 7. A -> B: A,na1
+ 8. B -> A: {na1,nb1,B}kab,nb1
+ 9. A -> B: {na1,nb1,A}kab
+
+AUTHa = {na,kab,B}kas
+MASKa = {AUTHa}kas
+AUTHb = {nb,kab,A}kbs
+MASKb = {AUTHb}kbs
+*/
+builtins: xor
+functions: enc/2, dec/2,prefix/1
+equations: dec(enc(M,k), k) = M,
+  prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AS1:
+  [ Fr(~na),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ AS1($A,$B,~na), Out(<$A,$B,~na>) ]
+
+rule SA2:
+let
+	AUTHa=enc(<<na,~kab>,$B>,kas)
+	MASKa=enc(AUTHa,kas)
+	respon=<AUTHa,MASKa XOR ~kab>
+in
+  [ In(<$A,$B,na>),Fr(~kab),!SharedKeyWithServer($A,kas)]
+--[  ]->
+  [ SA2($A,$B,~kab), Out(respon) ]
+
+rule AS3:
+let
+	m=dec(c1,kas)
+	nas=fst(fst(m))
+	kab=snd(fst(m))
+	MASKa = c2 XOR kab
+	c=enc(<<na,kab>,$A>,kas)
+in
+  [ AS1($A,$B,na),In(<c1,c2>),!SharedKeyWithServer($A,kas)]
+--[ Eq(nas,na),Eq(MASKa,enc(c1,kas)) ]->
+  [ Out(c),AS3($A,$B,na,kab) ]
+
+rule BS1:
+  [ Fr(~nb),!SharedKeyWithServer($B,kas)]
+--[  ]->
+  [ BS1($B,$A,~nb), Out(<$B,$A,~nb>) ]
+
+rule SB2:
+let
+	AUTHb=enc(<<nb,kab>,$A>,kbs)
+	MASKb=enc(AUTHb,kbs)
+	respon=<AUTHb,MASKb XOR kab>
+in
+  [ In(<$A,$B,nb>),!SharedKeyWithServer($B,kbs),SA2($A,$B,kab)]
+--[  ]->
+  [  Out(respon) ]
+
+rule BS3:
+let
+	m=dec(c1,kbs)
+	nbs=fst(fst(m))
+	kab=snd(fst(m))
+	MASKb = c2 XOR kab
+	c=enc(<<nb,kab>,$B>,kbs)
+in
+  [ BS1($B,$A,nb),In(<c1,c2>),!SharedKeyWithServer($B,kbs)]
+--[ Eq(nbs,nb),Eq(MASKb,enc(c1,kbs)) ]->
+  [ Out(c) ,BS3($B,$A,nb,kab)]
+
+
+rule AB1:
+
+  [ AS3($A,$B,na,kab),!SharedKeyWithServer($A,kas),Fr(~na1)]
+--[  ]->
+  [ Out(<$A,~na1>), AB1($A,$B,na,kab,~na1)]
+
+
+rule BA2:
+let
+	c=enc(<<na1,~nb1>,$B>,kab)
+	ser_responce=<c,~nb1>
+in
+  [ In(<$A,na1>), Fr(~nb1), BS3($B,$A,nb,kab), !SharedKeyWithServer($B,kbs)  ]
+--[ ]->
+  [ Out(ser_responce)]
+
+rule AB3:
+let
+	m=dec(c,kab)
+	nb1s=snd(fst(m))
+	na1s=fst(fst(m))
+	cs=enc(<<na1,nb1>,$B>,kab)
+in
+  [ In(<c,nb1>),  AB1($A,$B,na,kab,na1), !SharedKeyWithServer($A,kas) ]
+--[ Eq(nb1,nb1s),Eq(na1,na1s)]->
+  [ Out(cs)]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

@@ -1,0 +1,81 @@
+theory Wide_Mouthed_Frog begin
+
+
+
+/* 
+ 
+ Protocol:
+
+ 1. A -> S: A, {ta,B,kab}kas
+ 2. S -> B: {ts,A,kab}kbs
+
+
+*/
+
+functions: enc/2, dec/2, Mac/3,prefix/1
+equations: dec(enc(M,k), k) = M,
+  prefix(enc(<X,Y>, k)) = enc(X, k)
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule Initiator1Request:
+  [ Fr(~ta) ,Fr(~kab),!SharedKeyWithServer($A, kas) ]
+--[  ]->
+  [ Out(<$A, enc(<<~ta,$B>,~kab>,kas), ~ta>) ]
+
+rule Server:
+let
+	m=dec(c,kas)
+  kab=snd(m)
+	c2=enc(<<~ts,$A>,kab>,kbs)
+in
+  [ In(<$A,c>), Fr(~ts), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ ]->
+  [ Out(c2),!User($A,$B)]
+
+  rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A, k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+
+      rule Attack_test2:
+    [ In(c),In(m),!SharedKeyWithServer($B, k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+restriction singlesharedkeyperuser:
+  "All A #i #j. KeyGen(A) @ i & KeyGen(A) @ j ==> #i = #j"
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+
