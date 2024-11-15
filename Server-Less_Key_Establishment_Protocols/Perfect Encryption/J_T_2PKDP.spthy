@@ -1,0 +1,100 @@
+theory J_T_2PKDP begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A,na
+ 2. B -> A: AUTH,MASK XOR KAB1
+ 3. A -> B: {na,kab1,A}kab 
+
+
+*/
+builtins:xor
+functions: enc/2, dec/2,mac/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A,$B) ]->
+  [ !SharedKey($A, $B,~k) ]
+
+/*
+  rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ AB1($A,$B,~na), Out(<$A,~na>) ]
+
+
+rule BA2:
+let
+	AUTH=enc(<na,<~kab1,$B>>,kab)
+	MASK=mac(AUTH,kab)
+	rep=<AUTH,MASK XOR ~kab1>
+in
+  [ Fr(~kab1),In(<$A,na>),!SharedKey($A,$B,kab)]
+--[  ]->
+  [ BA2($A,$B,~kab1,na), Out(rep) ,!SharedNewKey($A,$B,~kab1)]
+
+
+rule AB3:
+let
+	m=dec(AUTH,kab)
+	nas=fst(m)
+	kab1=fst(snd(m))
+	MASK=MASK1 XOR kab1
+	c=enc(<na,<kab1,$A>>,kab)
+in
+  [ AB1($A,$B,na),In(<AUTH,MASK1>),!SharedKey($A,$B,kab)]
+--[  Eq(nas,na),Eq(MASK,mac(AUTH,kab))]->
+  [  Out(c) ]
+
+
+rule Attack_test1:
+    [ In(c),In(m),!SharedKey($A,$B,kab)]
+  --[ Eq(c,enc(m,kab)),Attack_suc() ]->
+    [ ]
+
+
+rule Attack_test2:
+    [ In(c),In(m),!SharedNewKey($A,$B,kab1)]
+  --[ Eq(c,enc(m,kab1)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+
+

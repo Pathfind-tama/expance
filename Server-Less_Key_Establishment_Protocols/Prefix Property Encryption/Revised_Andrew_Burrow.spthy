@@ -1,0 +1,101 @@
+theory Revised_Andrew_Burrow begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A,na
+ 2. B -> A: {na,kab1}kab
+ 3. A -> B: {na}kab1 
+ 4. B -> A: nb1
+
+*/
+functions: enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A,$B) ]->
+  [ !SharedKey($A, $B,~k) ]
+
+/*
+  rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ AB1($A,$B,~na), Out(<$A,~na>) ]
+
+
+rule BA2:
+let
+	c=enc(<na,~kab1>,kab)
+in
+  [ Fr(~kab1),In(<$A,na>),!SharedKey($A,$B,kab)]
+--[  ]->
+  [ BA2($A,$B,~kab1,na), Out(c) ,!SharedNewKey($A,$B,~kab1)]
+
+
+rule AB3:
+let
+	m=dec(c,kab)
+	nas=fst(m)
+	kab1=snd(m)
+	c1=enc(na,kab1)
+in
+  [ AB1($A,$B,na),In(c),!SharedKey($A,$B,kab)]
+--[  Eq(nas,na)]->
+  [  Out(c1) ]
+
+rule BA4:
+let
+	nas=dec(c,kab1)
+in
+  [ BA2($A,$B,kab1,na),In(c),Fr(~nb1),!SharedKey($A,$B,kab)]
+--[ Eq(nas,na)]->
+  [ Out(~nb1) ]
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedNewKey($A,$B,kab1)]
+  --[ Eq(c,enc(m,kab1)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

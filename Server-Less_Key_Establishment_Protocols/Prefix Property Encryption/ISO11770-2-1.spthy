@@ -1,0 +1,69 @@
+theory ISO11770_2_1 begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: {ta}kab
+
+
+*/
+functions: enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A,$B) ]->
+  [ !SharedKey($A, $B,~k) ]
+
+/*
+  rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~ta),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ Out(<enc(~ta,kab),~ta>) ]
+
+ 
+
+
+rule Attack_test1:
+    [ In(c),In(m),!SharedKey($A,$B,kab)]
+  --[ Eq(c,enc(m,kab)),Attack_suc() ]->
+    [ ]
+
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+end
+
