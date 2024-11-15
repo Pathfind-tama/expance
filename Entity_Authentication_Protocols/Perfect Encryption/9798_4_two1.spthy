@@ -1,0 +1,74 @@
+theory 9798two2 begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: {ta}kab
+
+
+*/
+functions: enc/2, dec/2,HMAC/2
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A,$B) ]->
+  [ !SharedKey($A, $B,~k) ]
+
+/*
+  rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+rule BA1:
+  [ Fr(~nb),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ Out(~nb) ,BA1($A,$B,~nb)]
+
+
+rule AB2:
+let
+	c=HMAC(<nb,$B>,kab)
+in
+  [ In(nb),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ Out(c)]
+
+ rule Attack_test1:
+    [ In(c),In(m),!SharedKey($A,$B,kab)]
+  --[ Eq(c,HMAC(m,kab)),Attack_suc() ]->
+    [ ]
+
+
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+//#ifdef timethis
+lemma Test:
+exists-trace
+"
+  Ex #j. Attack_suc()@j
+"
+//#endif
+end
+
