@@ -7,7 +7,7 @@ We added a decision rule to Tamarin, and then used the accessibility of the prim
 
 ././Perfect Encryption: non-extended algebraic property analysis
 
-././Prefix Property Encryption/fig: extended algebraic property analysis
+././Prefix Property Encryption: extended algebraic property analysis
 
 ./././fig: Store the analyzed path map as .png
 
