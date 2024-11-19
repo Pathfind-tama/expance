@@ -27,5 +27,5 @@ described preprocessor to mark each lemma, and only include the one you wish to 
 $ time tamarin-prover --prove *.spthy 
 ```
 
-# Apology
+# Explanation
 We have released part of the code, and we plan to release the remaining code after our paper is accepted.
