@@ -4,9 +4,12 @@ We added a decision rule to Tamarin, and then used the accessibility of the prim
 
 # Organization
 ./protocol:the protocols we analyzed
-./Perfect Encryption: non-extended algebraic property analysis
-./Prefix Property Encryption/fig: extended algebraic property analysis
-././fig: Store the analyzed path map as .png
+
+././Perfect Encryption: non-extended algebraic property analysis
+
+././Prefix Property Encryption/fig: extended algebraic property analysis
+
+./././fig: Store the analyzed path map as .png
 
 # How to reproduce the results
 This analysis uses version 1.6.0 of the [Tamarin-prover](https://github.com/tamarin-prover/tamarin-prover). Instructions for the installation and usage can be found in chapter 2 of the [manual](https://tamarin-prover.github.io/manual/book/002_installation.html).
