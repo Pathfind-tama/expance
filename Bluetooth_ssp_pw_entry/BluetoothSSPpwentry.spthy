@@ -1,0 +1,71 @@
+theory BluetoothSSPpwentry begin
+
+builtins:diffie-hellman
+functions: hmac/2
+
+rule SetupA:
+  [ Fr(~aa)]
+--[ ]->
+  [ !StateA($A,'g'^~aa,~aa) ,Out('g'^~aa)]
+
+rule SetupB:
+  [ In(pkA),Fr(~bb)]
+--[ Secret(pkA^~bb)]->
+  [ !StateB1($B,'g'^~bb,pkA),Out('g'^~bb) ]
+
+rule SetupA2:
+  [ In(pkB),!StateA($A,pkA,aa)]
+--[ Secret(pkB^aa)]->
+  [ !StateA1($A,pkA,pkB)]
+
+rule SetupTK:
+  [ Fr(~TK)]
+--[ Onlyonce()]->
+  [ !ShareTK($A,$B,~TK) ]
+
+rule B2:
+  [  !ShareTK($A,$B,TK),!StateB1($B,pkB,pkA),Fr(~nb)]
+--[ ]->
+  [ Out(hmac(<<pkB,pkA>,~nb>,TK)), Out(~nb),StateB1do($B,pkB,pkA,~nb)]
+
+rule A2:
+  [  !ShareTK($A,$B,TK),!StateA1($A,pkA,pkB),Fr(~na)]
+--[ ]->
+  [ Out(hmac(<<pkA,pkB>,~na>,TK)), Out(~na),StateA1do($A,pkA,pkB,~na)]
+
+rule B3:
+  [  !ShareTK($A,$B,TK),StateB1do($B,pkB,pkA,nb),In(hmac),In(na)]
+--[Eq(hmac,hmac(<<pkA,pkB>,na>,TK)) ]->
+  [ ]
+
+rule A3:
+  [  !ShareTK($A,$B,TK),StateA1do($A,pkA,pkB,na),In(hmac),In(nb)]
+--[Eq(hmac,hmac(<<pkB,pkA>,nb>,TK)) ]->
+  [ ]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!ShareTK($A,$B,TK)]
+  --[ Eq(c,hmac(m,TK)),Attack_suc() ]->
+    [ ]
+   
+restriction Verif:
+"
+    All #j #i . Onlyonce() @ i &   Onlyonce() @ j==> #i = #j
+"
+
+restriction Eqe:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+
+
+lemma Test:
+"
+	All key #i #j. Attack_suc()@j & Secret(key)@i
+		==> not (Ex #m. K(key)@m)
+"
+
+end
+

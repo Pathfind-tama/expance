@@ -1,0 +1,1592 @@
+Running tamarin-prover on 9798_2_one.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( prefix(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~ta ) @ #vk.3
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 10 (precomputed): !KU( ~ta ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~ta ) @ #vk.1
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+OK.
+
+theory ISO9798_2_one begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, prefix/1, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    prefix(enc(<X, Y>, k)) = enc(X, k),
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~ta, ~ta>, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB1_case_1
+    solve( !KU( ~ta ) @ #vk.3 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.5 )
+    qed
+  next
+    case AB1_case_2
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_3
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_4
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_5
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_6
+    solve( !KU( ~ta ) @ #vk.2 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.3 )
+    qed
+  next
+    case AB1_case_7
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_8
+    solve( !KU( ~ta ) @ #vk.1 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.2 )
+    qed
+  next
+    case c_enc
+    by solve( !KU( ~k ) @ #vk.2 )
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_one.spthy
+
+  Test (exists-trace): falsified - no trace found (45 steps)
+
+==============================================================================
+
+real	0m1.743s
+user	0m2.629s
+sys	0m0.364s
+Finished processing 9798_2_one.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_2_three.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): BA1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 0 (directly): Run( ) @ #j
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( prefix(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.21, Y.22> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.21, Y.22> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.20 ) ▶₂ #vr.6
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.18 ) ▶₁ #vr.17
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.20 ) ▶₂ #vr.6
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.18 ) ▶₁ #vr.17
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.17, Y.18> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    BA1( $A.10, $B.10, <X.24, Y.25> ) ▶₁ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.10, $B.10, kab.23 ) ▶₂ #vr.9
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.10, $B.10, kab.21 ) ▶₁ #vr.20
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.10, $B.10, t.17 ) ▶₂ #vr.9
+  solved goal nr. 8 (directly):
+    !SharedKey( $A.10, $B.10, kab.15 ) ▶₁ #vr.14
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    BA1( $A.10, $B.10, <X.20, Y.21> ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, t.1 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.10, $B.10, kab.23 ) ▶₂ #vr.9
+  solved goal nr. 16 (directly):
+    !SharedKey( $A.10, $B.10, kab.21 ) ▶₁ #vr.20
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.20 ) ▶₂ #vr.6
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.18 ) ▶₁ #vr.17
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.21, Y.22> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.23 ) ▶₂ #vr.6
+  solved goal nr. 19 (directly):
+    !SharedKey( $A.7, $B.7, kab.21 ) ▶₁ #vr.20
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.20 ) ▶₂ #vr.6
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.18 ) ▶₁ #vr.17
+  solved goal nr. 5 (directly):
+    BA1( $A.10, $B.10, <X.24, Y.25> ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.21, Y.22> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.10, $B.10, kab.23 ) ▶₂ #vr.9
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.10, $B.10, kab.21 ) ▶₁ #vr.20
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.20 ) ▶₂ #vr.6
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.18 ) ▶₁ #vr.17
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.17, Y.18> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, t.1 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.10, $B.10, t.19 ) ▶₂ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKey( $A.7, $B.7, kab.19 ) ▶₂ #vr.6
+  solved goal nr. 10 (directly):
+    !SharedKey( $A.10, $B.10, kab.17 ) ▶₁ #vr.16
+  solved goal nr. 14 (directly):
+    !SharedKey( $A.7, $B.7, kab.17 ) ▶₁ #vr.16
+  solved goal nr. 5 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.17, Y.18> ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    BA1( $A.10, $B.10, <X.20, Y.21> ) ▶₁ #vr.9
+  solved goal nr. 5 (directly): BA1( $A.7, $B.7, nb.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    BA1( $A.7, $B.7, <X.17, Y.18> ) ▶₁ #vr.6
+  solved goal nr. 3 (precomputed): BA1( $A, $B, nb ) ▶₁ #j
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 7 (precomputed):
+    !KU( enc(<<z, ~nb>, x>, ~k) ) @ #vk
+  solved goal nr. 10 (precomputed): !KU( ~nb ) @ #vk.1
+  solved goal nr. 11 (precomputed): !KU( ~k.2 ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 12 (precomputed): !KU( ~na ) @ #vk.4
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 14 (precomputed): !KU( ~k.2 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 11 (precomputed): !KU( ~na ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 10 (precomputed): !KU( ~na ) @ #vk.1
+  solved goal nr. 8 (precomputed):
+    !KU( enc(<<z, ~nb>, x>, ~k) ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 8 (precomputed):
+    !KU( enc(<<z, ~nb>, x>, ~k) ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 10 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 16 (precomputed): !KU( ~k.3 ) @ #vk.5
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 22 (precomputed): !KU( ~k.1 ) @ #vk.8
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 29 (precomputed): !KU( ~k.3 ) @ #vk.10
+  solved goal nr. 17 (precomputed): !KU( ~k.1 ) @ #vk.7
+  solved goal nr. 36 (precomputed): !KU( ~k.5 ) @ #vk.12
+  solved goal nr. 23 (precomputed): !KU( ~k.2 ) @ #vk.9
+  solved goal nr. 43 (precomputed): !KU( ~k.7 ) @ #vk.14
+  solved goal nr. 30 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 37 (precomputed): !KU( ~k.6 ) @ #vk.13
+  solved goal nr. 23 (precomputed): !KU( ~k.2 ) @ #vk.9
+  solved goal nr. 30 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 37 (precomputed): !KU( ~k.6 ) @ #vk.13
+  solved goal nr. 24 (precomputed): !KU( ~k.3 ) @ #vk.10
+  solved goal nr. 31 (precomputed): !KU( ~k.5 ) @ #vk.12
+  solved goal nr. 38 (precomputed): !KU( ~k.7 ) @ #vk.14
+  solved goal nr. 23 (precomputed): !KU( ~k.2 ) @ #vk.9
+  solved goal nr. 30 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 37 (precomputed): !KU( ~k.6 ) @ #vk.13
+  solved goal nr. 22 (precomputed): !KU( ~k.1 ) @ #vk.8
+  solved goal nr. 29 (precomputed): !KU( ~k.3 ) @ #vk.10
+  solved goal nr. 36 (precomputed): !KU( ~k.5 ) @ #vk.12
+  solved goal nr. 23 (precomputed): !KU( ~k.2 ) @ #vk.9
+  solved goal nr. 30 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 37 (precomputed): !KU( ~k.6 ) @ #vk.13
+  solved goal nr. 22 (precomputed): !KU( ~k.1 ) @ #vk.8
+  solved goal nr. 44 (precomputed): !KU( ~k.8 ) @ #vk.15
+  solved goal nr. 29 (precomputed): !KU( ~k.3 ) @ #vk.10
+  solved goal nr. 36 (precomputed): !KU( ~k.5 ) @ #vk.12
+  solved goal nr. 24 (precomputed): !KU( ~k.3 ) @ #vk.9
+  solved goal nr. 31 (precomputed): !KU( ~k.5 ) @ #vk.11
+  solved goal nr. 38 (precomputed): !KU( ~k.7 ) @ #vk.13
+  solved goal nr. 10 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 22 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 29 (precomputed): !KU( ~k.4 ) @ #vk.10
+  solved goal nr. 10 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 36 (precomputed): !KU( ~k.5 ) @ #vk.12
+  solved goal nr. 17 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 24 (precomputed): !KU( ~k.3 ) @ #vk.9
+  solved goal nr. 31 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 16 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 23 (precomputed): !KU( ~k.3 ) @ #vk.9
+  solved goal nr. 30 (precomputed): !KU( ~k.4 ) @ #vk.11
+  solved goal nr. 10 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 22 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 29 (precomputed): !KU( ~k.4 ) @ #vk.10
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 20 (precomputed): !KU( ~k.1 ) @ #vk.6
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k.1 ) @ #vk.5
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 21 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.11
+  solved goal nr. 21 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.11
+  solved goal nr. 22 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 29 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 36 (precomputed): !KU( ~k.7 ) @ #vk.12
+  solved goal nr. 21 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.11
+  solved goal nr. 20 (precomputed): !KU( ~k.1 ) @ #vk.6
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 21 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.11
+  solved goal nr. 20 (precomputed): !KU( ~k.1 ) @ #vk.6
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 22 (precomputed): !KU( ~k.3 ) @ #vk.7
+  solved goal nr. 29 (precomputed): !KU( ~k.5 ) @ #vk.9
+  solved goal nr. 36 (precomputed): !KU( ~k.7 ) @ #vk.11
+  solved goal nr. 10 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 22 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 29 (precomputed): !KU( ~k.4 ) @ #vk.10
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 18 (precomputed): !KU( ~k.1 ) @ #vk.5
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 25 (precomputed): !KU( ~k.3 ) @ #vk.7
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 32 (precomputed): !KU( ~k.5 ) @ #vk.9
+  solved goal nr. 13 (precomputed): !KU( ~k.1 ) @ #vk.4
+  solved goal nr. 19 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 26 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 33 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 19 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 40 (precomputed): !KU( ~k.8 ) @ #vk.12
+  solved goal nr. 26 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 33 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 20 (precomputed): !KU( ~k.3 ) @ #vk.7
+  solved goal nr. 27 (precomputed): !KU( ~k.5 ) @ #vk.9
+  solved goal nr. 34 (precomputed): !KU( ~k.7 ) @ #vk.11
+  solved goal nr. 19 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 26 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 33 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 18 (precomputed): !KU( ~k.1 ) @ #vk.5
+  solved goal nr. 25 (precomputed): !KU( ~k.3 ) @ #vk.7
+  solved goal nr. 32 (precomputed): !KU( ~k.5 ) @ #vk.9
+  solved goal nr. 19 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 39 (precomputed): !KU( ~k.7 ) @ #vk.11
+  solved goal nr. 26 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 33 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 18 (precomputed): !KU( ~k.1 ) @ #vk.5
+  solved goal nr. 25 (precomputed): !KU( ~k.3 ) @ #vk.7
+  solved goal nr. 32 (precomputed): !KU( ~k.5 ) @ #vk.9
+  solved goal nr. 20 (precomputed): !KU( ~k.3 ) @ #vk.6
+  solved goal nr. 27 (precomputed): !KU( ~k.5 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.7 ) @ #vk.10
+  solved goal nr. 18 (precomputed): !KU( ~na ) @ #vk.4
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.7
+  solved goal nr. 17 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 26 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 33 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 21 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.11
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 26 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 33 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 27 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 34 (precomputed): !KU( ~k.5 ) @ #vk.10
+  solved goal nr. 26 (precomputed): !KU( ~k.2 ) @ #vk.7
+  solved goal nr. 33 (precomputed): !KU( ~k.4 ) @ #vk.9
+  solved goal nr. 28 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 35 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 24 (precomputed): !KU( ~k.4 ) @ #vk.8
+  solved goal nr. 31 (precomputed): !KU( ~k.6 ) @ #vk.10
+  solved goal nr. 38 (precomputed): !KU( ~k.8 ) @ #vk.12
+  solved goal nr. 24 (precomputed): !KU( ~k.2 ) @ #vk.10
+  solved goal nr. 31 (precomputed): !KU( ~k.4 ) @ #vk.12
+  solved goal nr. 38 (precomputed): !KU( ~k.6 ) @ #vk.14
+  solved goal nr. 17 (precomputed): !KU( ~k.2 ) @ #vk.6
+  solved goal nr. 24 (precomputed): !KU( ~k.3 ) @ #vk.8
+  solved goal nr. 31 (precomputed): !KU( ~k.4 ) @ #vk.10
+  solved goal nr. 23 (precomputed): !KU( ~k.5 ) @ #vk.7
+  solved goal nr. 30 (precomputed): !KU( ~k.7 ) @ #vk.9
+  solved goal nr. 37 (precomputed): !KU( ~k.9 ) @ #vk.11
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 12 (precomputed): !KU( ~nb ) @ #vk.2
+  solved goal nr. 15 (precomputed): !KU( ~k.2 ) @ #vk.4
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, prefix/1, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    prefix(enc(<X, Y>, k)) = enc(X, k),
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ Fr( ~nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~nb ), BA1( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB2:
+   [ In( nb ), Fr( ~na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~na, nb>, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA3:
+   [ In( c ), BA1( $A, $B, nb ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( snd(fst(dec(c, kab))), nb ), Run( ) ]->
+   [ Out( enc(<nb, fst(fst(dec(c, kab)))>, kab) ) ]
+
+  /*
+  rule (modulo AC) BA3:
+     [ In( c ), BA1( $A, $B, nb ), !SharedKey( $A, $B, kab ) ]
+    --[ Eq( z.1, nb ), Run( ) ]->
+     [ Out( enc(<nb, z>, kab) ) ]
+    variants (modulo AC)
+    1. c     = c.8
+       kab   = kab.8
+       z     = fst(fst(dec(c.8, kab.8)))
+       z.1   = snd(fst(dec(c.8, kab.8)))
+    
+    2. c     = enc(x.8, x.9)
+       kab   = x.9
+       z     = fst(fst(x.8))
+       z.1   = snd(fst(x.8))
+    
+    3. c     = enc(<x.8, x.9>, x.10)
+       kab   = x.10
+       z     = fst(x.8)
+       z.1   = snd(x.8)
+    
+    4. c     = enc(<<x.8, x.9>, x.10>, x.11)
+       kab   = x.11
+       z     = x.8
+       z.1   = x.9
+  */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case BA3_case_4
+    solve( !KU( enc(<<z, ~nb>, x>, ~k) ) @ #vk.2 )
+      case AB2
+      solve( !KU( ~nb ) @ #vk.2 )
+        case BA1
+        SOLVED // trace found
+      qed
+    qed
+  qed
+qed
+
+lemma Test2:
+  exists-trace "∃ #j. Run( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Run( ) @ #j)"
+*/
+simplify
+solve( BA1( $A, $B, nb ) ▶₁ #j )
+  case BA1
+  solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+    case setup
+    solve( !KU( enc(<<z, ~nb>, x>, ~k) ) @ #vk )
+      case AB2
+      solve( !KU( ~nb ) @ #vk.1 )
+        case BA1
+        SOLVED // trace found
+      qed
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_three.spthy
+
+  Test (exists-trace): verified (6 steps)
+  Test2 (exists-trace): verified (6 steps)
+
+==============================================================================
+
+real	0m10.734s
+user	0m16.774s
+sys	0m1.458s
+Finished processing 9798_2_three.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+real	0m3.174s
+user	0m4.890s
+sys	0m0.586s
+Finished processing 9798_2_two2.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on Woo-LAM.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly):
+    !SharedKeyWithServer( t.1, t.2 ) ▶₀ #i
+  solved goal nr. 0 (directly):
+    ResponderWaitConfirm2( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 3 (directly):
+    ResponderWaitConfirm( $A.5, $B.5, t.3 ) ▶₁ #vr.4
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): InitiatorRequested( t.1, t.2 ) ▶₀ #i
+  solved goal nr. 0 (directly):
+    ResponderWaitConfirm( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 2 (directly):
+    !SharedKeyWithServer( $A.4, kas.4 ) ▶₀ #vr.3
+  solved goal nr. 3 (directly):
+    !SharedKeyWithServer( $B.5, kbs.5 ) ▶₁ #vr.4
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKeyWithServer( $B.5, kbs.5 ) ▶₂ #vr.4
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.10, $B.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.7, $B.7 ) ▶₁ #vr.6
+  solved goal nr. 7 (directly):
+    !SharedKeyWithServer( $B.5, kbs.9 ) ▶₁ #vr.8
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₂ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.10, $B.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 9 (directly):
+    !SharedKeyWithServer( $A.10, kas.14 ) ▶₀ #vr.13
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.10, kas.18 ) ▶₀ #vr.17
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.7, kas.15 ) ▶₀ #vr.14
+  solved goal nr. 0 (directly): !KU( prefix(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.7, $B.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.7, $B.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₂ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.10, $B.10 ) ▶₁ #vr.9
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.7, kas.15 ) ▶₀ #vr.14
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₂ #vr.9
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.7, kas.15 ) ▶₀ #vr.14
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.10, kas.18 ) ▶₀ #vr.17
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.10, kas.18 ) ▶₀ #vr.17
+  solved goal nr. 5 (directly):
+    ResponderWaitConfirm( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 9 (directly):
+    !SharedKeyWithServer( $B.10, kbs.14 ) ▶₁ #vr.13
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.7, $B.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    ResponderWaitConfirm( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, kbs.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 17 (directly):
+    !SharedKeyWithServer( $B.10, kbs.20 ) ▶₁ #vr.19
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 5 (directly):
+    ResponderWaitConfirm( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 11 (directly):
+    !SharedKeyWithServer( $B.10, kbs.16 ) ▶₁ #vr.15
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 13 (directly):
+    !SharedKeyWithServer( $A.7, kas.15 ) ▶₀ #vr.14
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, kbs.10 ) ▶₂ #vr.9
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, kbs.10 ) ▶₂ #vr.9
+  solved goal nr. 3 (directly): splitEqs(0)
+saturateSources: Saturation aborted, more than 5 iterations.
+  solved goal nr. 4 (precomputed):
+    !SharedKeyWithServer( $B, kbs ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+OK.
+
+theory Woo_LAM begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, prefix/1, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    prefix(enc(<X, Y>, k)) = enc(X, k),
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A ) ]-> [ !SharedKeyWithServer( $A, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator1Request:
+   [ !SharedKeyWithServer( $A, kas ) ]
+  -->
+   [ InitiatorRequested( $A, $B ), Out( $A ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) B2A:
+   [ In( $A ), !SharedKeyWithServer( $B, kbs ), Fr( ~nb ) ]
+  -->
+   [ ResponderWaitConfirm( $A, $B, ~nb ), Out( ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB3:
+   [ In( nb ), InitiatorRequested( $A, $B ), !SharedKeyWithServer( $A, kas )
+   ]
+  -->
+   [ Out( enc(nb, kas) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BS4:
+   [
+   In( c ), ResponderWaitConfirm( $A, $B, nb ),
+   !SharedKeyWithServer( $B, kbs )
+   ]
+  -->
+   [ Out( enc(<$A, c>, kbs) ), ResponderWaitConfirm2( $A, $B, nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Server:
+   [
+   In( c ), !SharedKeyWithServer( $A, kas ), !SharedKeyWithServer( $B, kbs )
+   ]
+  --[ Eq( fst(dec(c, kbs)), $A ) ]->
+   [ Out( enc(dec(c, kas), kbs) ) ]
+
+  /*
+  rule (modulo AC) Server:
+     [
+     In( c ), !SharedKeyWithServer( $A, kas ), !SharedKeyWithServer( $B, kbs )
+     ]
+    --[ Eq( z.1, $A ) ]->
+     [ Out( enc(z, kbs) ) ]
+    variants (modulo AC)
+    1. c     = c.8
+       kas   = kas.8
+       kbs   = kbs.8
+       z     = dec(c.8, kas.8)
+       z.1   = fst(dec(c.8, kbs.8))
+    
+    2. c     = enc(x.8, x.9)
+       kas   = x.9
+       kbs   = x.9
+       z     = x.8
+       z.1   = fst(x.8)
+    
+    3. c     = enc(x.8, x.9)
+       kas   = x.9
+       kbs   = kbs.10
+       z     = x.8
+       z.1   = fst(dec(enc(x.8, x.9), kbs.10))
+    
+    4. c     = enc(x.8, x.9)
+       kas   = kas.10
+       kbs   = x.9
+       z     = dec(enc(x.8, x.9), kas.10)
+       z.1   = fst(x.8)
+    
+    5. c     = enc(<x.8, x.9>, x.10)
+       kas   = x.10
+       kbs   = x.10
+       z     = <x.8, x.9>
+       z.1   = x.8
+    
+    6. c     = enc(<x.8, x.9>, x.10)
+       kas   = kas.11
+       kbs   = x.10
+       z     = dec(enc(<x.8, x.9>, x.10), kas.11)
+       z.1   = x.8
+  */
+
+rule (modulo E) B5:
+   [
+   In( c2 ), ResponderWaitConfirm2( $A, $B, nb ),
+   !SharedKeyWithServer( $B, kbs )
+   ]
+  --[ Eq( dec(c2, kbs), nb ) ]->
+   [ ]
+
+  /*
+  rule (modulo AC) B5:
+     [
+     In( c2 ), ResponderWaitConfirm2( $A, $B, nb ),
+     !SharedKeyWithServer( $B, kbs )
+     ]
+    --[ Eq( z, nb ) ]->
+     [ ]
+    variants (modulo AC)
+    1. c2    = c2.7
+       kbs   = kbs.7
+       z     = dec(c2.7, kbs.7)
+    
+    2. c2    = enc(x.7, x.8)
+       kbs   = x.8
+       z     = x.7
+  */
+
+rule (modulo E) Attack_test:
+   [ In( c ), In( m ), !SharedKeyWithServer( $B, kbs ) ]
+  --[ Eq( c, enc(m, kbs) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKeyWithServer( $B, kbs ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB3_case_1
+    SOLVED // trace found
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: Woo-LAM.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.478s
+user	0m0.524s
+sys	0m0.069s
+Finished processing Woo-LAM.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+time tamarin-prover --prove 9798_2_two2.spthy 
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation: OK.
+
+  solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( prefix(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, kab.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 11 (precomputed): !KU( ~ta ) @ #vk.3
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 10 (precomputed): !KU( ~ta ) @ #vk.2
+  solved goal nr. 8 (precomputed): !KU( ~k.1 ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~ta ) @ #vk.1
+  solved goal nr. 12 (precomputed): !KU( ~tb ) @ #vk.4
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 11 (precomputed): !KU( ~tb ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k.1 ) @ #vk.3
+  solved goal nr. 10 (precomputed): !KU( ~tb ) @ #vk.1
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.4
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+  solved goal nr. 13 (precomputed): !KU( ~k ) @ #vk.3
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, prefix/1, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    prefix(enc(<X, Y>, k)) = enc(X, k),
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~ta, ~ta>, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ In( c ), Fr( ~tb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~tb, ~tb>, $A>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB1_case_1
+    solve( !KU( ~ta ) @ #vk.3 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.5 )
+    qed
+  next
+    case AB1_case_2
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_3
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_4
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_5
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_6
+    solve( !KU( ~ta ) @ #vk.2 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.3 )
+    qed
+  next
+    case AB1_case_7
+    by solve( !KU( ~k.1 ) @ #vk.2 )
+  next
+    case AB1_case_8
+    solve( !KU( ~ta ) @ #vk.1 )
+      case AB1_case_01
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_02
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_03
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_04
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_05
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_06
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_07
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_08
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_09
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_10
+      by solve( !KU( ~k ) @ #vk.2 )
+    next
+      case AB1_case_11
+      by solve( !KU( ~k ) @ #vk.2 )
+    qed
+  next
+    case BA1_case_1
+    solve( !KU( ~tb ) @ #vk.4 )
+      case BA1_case_01
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_02
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_03
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_04
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_05
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_06
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_07
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_08
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_09
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_10
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_11
+      by solve( !KU( ~k ) @ #vk.6 )
+    qed
+  next
+    case BA1_case_2
+    by solve( !KU( ~k.1 ) @ #vk.3 )
+  next
+    case BA1_case_3
+    by solve( !KU( ~k.1 ) @ #vk.3 )
+  next
+    case BA1_case_4
+    by solve( !KU( ~k.1 ) @ #vk.3 )
+  next
+    case BA1_case_5
+    by solve( !KU( ~k.1 ) @ #vk.3 )
+  next
+    case BA1_case_6
+    solve( !KU( ~tb ) @ #vk.3 )
+      case BA1_case_01
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_02
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_03
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_04
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_05
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_06
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_07
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_08
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_09
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_10
+      by solve( !KU( ~k ) @ #vk.4 )
+    next
+      case BA1_case_11
+      by solve( !KU( ~k ) @ #vk.4 )
+    qed
+  next
+    case BA1_case_7
+    by solve( !KU( ~k.1 ) @ #vk.3 )
+  next
+    case BA1_case_8
+    solve( !KU( ~tb ) @ #vk.1 )
+      case BA1_case_01
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_02
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_03
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_04
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_05
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_06
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_07
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_08
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_09
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_10
+      by solve( !KU( ~k ) @ #vk.3 )
+    next
+      case BA1_case_11
+      by solve( !KU( ~k ) @ #vk.3 )
+    qed
+  next
+    case c_enc
+    by solve( !KU( ~k ) @ #vk.2 )
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_two2.spthy
+
+  Test (exists-trace): falsified - no trace found (86 steps)
+
+==============================================================================
+
+real  0m3.522s
+user  0m5.830s
+sys 0m0.446s

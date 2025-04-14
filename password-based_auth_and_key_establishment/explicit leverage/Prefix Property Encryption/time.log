@@ -1,0 +1,140 @@
+time tamarin-prover --prove CHAPv1.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: CHAPv1.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.073s
+user	0m0.083s
+sys	0m0.015s
+
+
+
+time tamarin-prover --prove CHAPv2.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: CHAPv2.spthy
+
+  Test (exists-trace): verified (6 steps)
+
+==============================================================================
+
+real	0m0.113s
+user	0m0.177s
+sys	0m0.044s
+
+
+
+time tamarin-prover --prove --auto-source --bound=5 Simplifie_GLNS_secret_public.spthy
+==============================================================================
+summary of summaries:
+
+analyzed: Simplifie_GLNS_secret_public.spthy
+
+  WARNING: 11 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  AUTO_typing (all-traces): analysis incomplete (128 steps)
+  Test (exists-trace): analysis incomplete (38909 steps)
+
+==============================================================================
+
+real	25m58.548s
+user	33m50.295s
+sys	2m24.908s
+
+
+time tamarin-prover --prove --auto-source --bound=5 GLNS_compact.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: GLNS_compact.spthy
+
+  WARNING: 13 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  AUTO_typing (all-traces): analysis incomplete (176 steps)
+  Test (exists-trace): analysis incomplete (5589 steps)
+
+==============================================================================
+
+real	23m49.580s
+user	25m5.521s
+sys	1m40.697s
+
+time tamarin-prover --prove --bound=5 EAP-EKE.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: EAP-EKE.spthy
+
+  Test (exists-trace): analysis incomplete (196716 steps)
+
+==============================================================================
+
+real	68m33.221s
+user	86m11.008s
+sys	5m49.853s
+
+
+time tamarin-prover --prove --auto-source --bound=5 GLNS_nonce_based.spthy 
+
+==============================================================================
+summary of summaries:
+
+analyzed: GLNS_nonce_based.spthy
+
+  WARNING: 13 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  AUTO_typing (all-traces): analysis incomplete (176 steps)
+  Test (exists-trace): analysis incomplete (8178 steps)
+
+==============================================================================
+
+real	20m47.782s
+user	24m35.625s
+sys	1m53.368s
+
+
+
+time tamarin-prover --prove --auto-source --bound=5 GLNS_public_key.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: GLNS_public_key.spthy
+
+  WARNING: 17 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  AUTO_typing (all-traces): analysis incomplete (176 steps)
+  Test (exists-trace): analysis incomplete (19114 steps)
+
+==============================================================================
+
+real	5m20.550s
+user	17m0.188s
+sys	2m10.673s
+
+
+
+time tamarin-prover --prove --auto-source --bound=5 Optimal_GLNS_public_key.spthy 
+
+==============================================================================
+summary of summaries:
+
+analyzed: Optimal_GLNS_public_key.spthy
+
+  AUTO_typing (all-traces): verified (1 steps)
+  Test (exists-trace): analysis incomplete (788 steps)
+
+==============================================================================
+
+real	0m27.769s
+user	0m47.757s
+sys	0m3.545s

@@ -1,0 +1,112 @@
+theory Woo_LAM begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: A
+ 2. B -> A: nb
+ 3. A -> B: {nb}kas
+ 4. B -> S: {A,{nb}kas}Kbs
+ 5. S -> B: {nb}kbs
+
+*/
+
+functions: enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A, ~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule Initiator1Request:
+
+  [ !SharedKeyWithServer($A,kas)]
+--[ ]->
+  [ InitiatorRequested($A,$B), Out($A) ]
+
+rule B2A:
+
+  [ In($A) ,!SharedKeyWithServer($B,kbs),Fr(~nb)]
+--[  ]->
+  [ ResponderWaitConfirm($A,$B,~nb), Out(~nb) ]
+
+rule AB3:
+
+  [ In(nb),InitiatorRequested($A,$B),!SharedKeyWithServer($A,kas)]
+--[]->
+  [ Out(enc(nb,kas)) ]
+
+rule BS4:
+  [ In(c),ResponderWaitConfirm($A,$B,nb),!SharedKeyWithServer($B,kbs)]
+--[]->
+  [ Out(enc(<$A,c>,kbs)) ,ResponderWaitConfirm2($A,$B,nb)]
+
+rule Server:
+let
+	m=dec(c,kbs)
+	A1=fst(m)
+	c1=snd(m)
+	nb=dec(c,kas)
+	c2=enc(nb,kbs)
+in
+  [ In(c), !SharedKeyWithServer($A,kas), !SharedKeyWithServer($B,kbs)  ]
+--[ Eq(A1,$A) ]->
+  [ Out(c2)]
+
+rule B5:
+let
+	nbs=dec(c2,kbs)
+in
+  [ In(c2) ,ResponderWaitConfirm2($A,$B,nb), !SharedKeyWithServer($B, kbs)
+  ]
+--[  Eq(nbs,nb)]->
+  []
+
+
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

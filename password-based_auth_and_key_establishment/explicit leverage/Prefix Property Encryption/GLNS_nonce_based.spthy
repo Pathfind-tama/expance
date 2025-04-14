@@ -1,0 +1,108 @@
+theory GLNS_nonce_based
+begin
+builtins:	asymmetric-encryption,xor
+functions: h/1,enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+
+rule Password_init:
+    [ Fr(~pwa),Fr(~pwb) ]
+  --[ Init_pw_once() ]->
+    [ !Own_AS(~pwa,$A,$S),!Own_BS(~pwb,$B,$S) ]
+
+rule Register_pk:
+	[ Fr(~ltk) ]
+	-->
+	[ !Ltk($A, ~ltk), !Pk($A, pk(~ltk)),Out(pk(~ltk)) ]
+
+rule AB1s:
+  let
+    c = aenc(<$A,$B,~na1,~na2,~ca,~na3,enc(~na3,pwa)>,pkS)
+  in
+    [ !Own_AS(pwa,$A,$S),!Pk($S, pkS),Fr(~na1),Fr(~na2),Fr(~ca),Fr(~na3),Fr(~ra) ]
+  --[ ]->
+    [ Out(<c,~ra>),AB1($A,$B,~na1,~na2,~ca,~na3,~ra,pwa) ]
+
+rule BS1s:
+  let
+    c1 = aenc(<$B,$A,~nb1,~nb2,~cb,~nb3,enc(~nb3,pwb)>,pkS)
+  in
+    [ !Own_BS(pwb,$B,$S),!Pk($S, pkS),Fr(~nb1),Fr(~nb2),Fr(~cb),Fr(~nb3),In(<c,ra>) ]
+  --[ ]->
+    [ Out(<c,c1>),BS1($A,$B,~nb1,~nb2,~cb,~nb3,ra,pwb) ]
+
+
+rule SB1s:
+  let
+    c1 = enc(<na1,na2 XOR ~k>,na3)
+    c2 = enc(<nb1,nb2 XOR ~k>,nb3)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S),!Ltk($S,ltk),Fr(~k)
+    ,In(<aenc(<$B,$A,nb1,nb2,cb,nb3,enc(nb3,pwb)>,pk(ltk)),aenc(<$A,$B,na1,na2,ca,na3,enc(na3,pwa)>,pk(ltk))>) 
+    ]
+  --[ ]->
+    [ Out(<c1,c2>) ]
+
+rule BA1s:
+  let
+ 	k = y XOR nb2
+    ver = enc(<h(ra),~rb>,k)
+  in
+    [ !Own_BS(pwb,$B,$S),BS1($A,$B,nb1,nb2,cb,nb3,ra,pwb),In(<c1,enc(<nb1s,y>,nb3)>),Fr(~rb) ]
+  --[  Eq(nb1s,nb1)]->
+    [ Out(<ver,c1>),!Save(k)]
+
+
+rule AB2s:
+  let
+  	k = y XOR na2
+    vers = fst(dec(ver,k))
+    rb = snd(dec(ver,k))
+    c = enc(h(rb),k)
+  in
+    [ !Own_AS(pwa,$A,$S),AB1($A,$B,na1,na2,ca,na3,ra,pwa),In(<enc(<na1s,y>,na3),ver>) ]
+  --[ Eq(vers,h(ra)),Eq(na1s,na1)]->
+    [ Out(c)]
+
+
+
+rule Attack_test1:
+    [ In(c),In(m),!Own_AS(pwa,$A,$S) ]
+  --[ Eq(c,enc(m,pwa)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!Own_BS(pwb,$B,$S)]
+  --[ Eq(c,enc(m,pwb)),Attack_suc() ]->
+    [ ]
+
+ rule Attack_test3:
+    [ In(c),In(m),!Save(k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end

@@ -1,0 +1,117 @@
+
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-1.spthy
+
+  Test (exists-trace): falsified - no trace found (7 steps)
+
+==============================================================================
+
+real	0m0.173s
+user	0m0.154s
+sys	0m0.059s
+
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-2.spthy
+
+  Test (exists-trace): falsified - no trace found (6 steps)
+
+==============================================================================
+
+real	0m0.133s
+user	0m0.184s
+sys	0m0.017s
+
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-3.spthy
+
+  Test (exists-trace): falsified - no trace found (7 steps)
+
+==============================================================================
+
+real	0m0.193s
+user	0m0.336s
+sys	0m0.052s
+
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-4.spthy
+
+  Test (exists-trace): falsified - no trace found (6 steps)
+
+==============================================================================
+
+real	0m0.113s
+user	0m0.142s
+sys	0m0.020s
+
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-5.spthy
+
+  Test (exists-trace): falsified - no trace found (10 steps)
+
+==============================================================================
+
+real	0m0.193s
+user	0m0.345s
+sys	0m0.041s
+==============================================================================
+summary of summaries:
+
+analyzed: ISO11770-2-6.spthy
+
+  AUTO_typing (all-traces): verified (26 steps)
+  Test (exists-trace): falsified - no trace found (10 steps)
+
+==============================================================================
+
+real	0m0.759s
+user	0m1.722s
+sys	0m0.117s
+==============================================================================
+summary of summaries:
+
+analyzed: J_T_2PKDP.spthy
+
+  AUTO_typing (all-traces): verified (17 steps)
+  Test (exists-trace): falsified - no trace found (37 steps)
+
+==============================================================================
+
+real	0m1.793s
+user	0m4.281s
+sys	0m0.348s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Revised_Andrew_Burrow.spthy
+
+  Test (exists-trace): verified (6 steps)
+
+==============================================================================
+
+real	0m0.253s
+user	0m0.490s
+sys	0m0.047s
+
+==============================================================================
+summary of summaries:
+
+analyzed: RPC.spthy
+
+  Test (exists-trace): falsified - no trace found (17 steps)
+
+==============================================================================
+
+real	0m0.255s
+user	0m0.496s
+sys	0m0.060s

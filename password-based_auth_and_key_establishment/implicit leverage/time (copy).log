@@ -1,0 +1,18 @@
+
+time tamarin-prover --prove --auto-source --bound=5 GLNS_compact.spthy 
+==============================================================================
+summary of summaries:
+
+analyzed: GLNS_compact.spthy
+
+  WARNING: 13 wellformedness check failed!
+           The analysis results might be wrong!
+  
+  AUTO_typing (all-traces): analysis incomplete (176 steps)
+  Test (exists-trace): analysis incomplete (5589 steps)
+
+==============================================================================
+
+real	23m49.580s
+user	25m5.521s
+sys	1m40.697s

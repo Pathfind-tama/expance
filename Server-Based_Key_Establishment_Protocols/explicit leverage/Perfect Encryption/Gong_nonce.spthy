@@ -1,0 +1,49 @@
+theory Gongtime begin
+
+
+functions: enc/2, dec/2, Mac/3
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A) ]->
+  [ !SharedKeyWithServer($A,~k) ]
+
+rule A2B1:
+  [ !SharedKeyWithServer($A,kas) ,Fr(~na)]
+--[  ]->
+  [ InitiatorRequestedA($A,$B,~na), Out(<$A,$B,~na>) ]
+
+rule B2S1:
+let
+    c=enc(<<<<<$B,$S>,$B>,~k2>,$A>,na>,kbs)
+in
+  [In(<$A,$B,na>), !SharedKeyWithServer($B,kbs) ,Fr(~k2),Fr(~nb)]
+--[  ]->
+  [ InitiatorRequestedB($A,$B,~k2,~nb), Out(<$A,$B,~nb,c>) ]
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKeyWithServer($A, kas) ]
+  --[ Eq(c,enc(m,kas)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!SharedKeyWithServer($B, kbs) ]
+  --[ Eq(c,enc(m,kbs)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

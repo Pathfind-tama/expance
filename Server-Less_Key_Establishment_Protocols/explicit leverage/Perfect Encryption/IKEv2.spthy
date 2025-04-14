@@ -1,0 +1,94 @@
+theory IKEv2 begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: SA,gx,ni,HDRi
+ 2. B -> A: SA,gy,nr,HDRy
+ 3. A -> B: {IDi,CertI,sigi(mi),SAi,TSi,TSr}gxy 
+ 4. B -> S: {IDr,Certr,sigr(mr),SAr,TSr,TSr}gxy 
+
+*/
+builtins:asymmetric-encryption,diffie-hellman,signing
+functions: enc/2, dec/2, prefix/1,up/1
+equations: dec(enc(M,k), k) = M
+        // , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+rule PKI:
+  [ Fr(~sk) ]
+--[  ]->
+  [ !Ltk(~sk,$A),!PK($A,pk(~sk)),Out(<$A,pk(~sk)>) ]
+
+
+rule AB1:
+  [ Fr(~ni),Fr(~sai),Fr(~x),!PK($B,pkB),!Ltk(sk,$A)]
+--[  ]->
+  [ Out(<~sai,'g'^~x,~ni>),A_1(~sai,~x,~ni,$A,$B) ]
+
+
+rule BA2:
+  [ Fr(~nr),Fr(~sar),Fr(~y),!PK($A,pkA),!Ltk(sk,$B),In(<sai,Ga,ni>)]
+--[  ]->
+  [ Out(<~sar,'g'^~y,~nr>),B_1(sai,Ga,ni,$A,$B,~sar,~y,~nr) ]
+
+
+rule AB3:
+let
+	c=<sar,Gb,nr>
+	key = Gb^x
+	sigi = sign(up(up(ni,nr,key),'g'^x,Gb,pk(sk),pkB),sk)
+	c1 = enc(<<<$A,pk(sk)>,sigi>,sai>,key)
+in
+  [ A_1(sai,x,ni,$A,$B),In(c),!PK($B,pkB),!Ltk(sk,$A)]
+--[  ]->
+  [  Out(c1) ]
+
+rule BA4:
+let
+	key = Ga^y
+	plain=dec(c,key)
+in
+  [ B_1(sai,Ga,ni,$A,$B,sar,y,nr),In(c),!PK($A,pkA),!Ltk(sk,$B)]
+--[ Eq(snd(plain),sai),
+	Eq(verify(snd(fst(plain)),up(up(ni,nr,key),Ga,'g'^y,pkA,pk(sk)),pkA),true)            
+ ]->
+  [ !SharedKey($A,$B,key)  ]
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKey($A,$B,kab)]
+  --[ Eq(c,enc(m,kab)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

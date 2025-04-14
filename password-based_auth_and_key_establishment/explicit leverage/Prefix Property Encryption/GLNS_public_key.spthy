@@ -1,0 +1,131 @@
+theory GLNS_secret_public
+begin
+builtins:	asymmetric-encryption,xor
+functions: h/1,enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+
+rule Password_init:
+    [ Fr(~pwa),Fr(~pwb) ]
+  --[ Init_pw_once() ]->
+    [ !Own_AS(~pwa,$A,$S),!Own_BS(~pwb,$B,$S) ]
+
+rule Register_pk:
+	[ Fr(~ltk) ]
+	-->
+	[ !Ltk($A, ~ltk), !Pk($A, pk(~ltk)) ]
+
+rule AS1s:
+    [ !Own_AS(pwa,$A,$S),!Pk($A, pkA)]
+  --[ ]->
+    [ Out(<$A,$B>),AS1($A,$B) ]
+
+
+rule SA1s:
+  let
+    c1 = enc(pkA,pwa)
+    c2 = enc(pkB,pwb)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S),!Pk($S, pkB),!Pk($S, pkA), In(<$A,$B>),Fr(~ns)
+    ]
+  --[ Neq(pkA,pkB)]->
+    [ Out(<$A,$B,~ns,c1,c2>),SA1($A,$B,pkA,pkB,~ns)  ]
+
+restriction Inequality:
+"All x #i. Neq(x,x) @ #i ==> F"
+
+rule AB1s:
+  let
+    pkA = dec(c1,pwa)
+    asc1 = aenc(<$A,$B,~na1,~na2,~ca,enc(ns,pwa)>,pkA)
+  in
+    [ !Own_AS(pwa,$A,$S),Fr(~ca),In(<$A,$B,ns,c1,c2>),Fr(~na1),Fr(~na2),Fr(~ra),AS1($A,$B)]
+  --[ ]->
+    [ Out(<asc1,ns,~ra,c2>), AB1($A,$B,~ca,~na1,~na2,~ra,ns,pkA)]
+
+rule BS1s:
+  let
+    pkB = dec(c2,pwb)
+    bsc1 = aenc(<$B,$A,~nb1,~nb2,~cb,enc(ns,pwb)>,pkB)
+  in
+    [ !Own_BS(pwb,$B,$S),In(<asc1,ns,ra,c2>),Fr(~cb),Fr(~nb1),Fr(~nb2),Fr(~rb) ]
+  --[ ]->
+    [ Out(<bsc1,asc1>),BS1($A,$B,~cb,~nb1,~nb2,~rb,ns,pkB,ra)]
+
+rule SB1s:
+  let
+    ca1=enc(<na1,~k XOR na2>, pwa)
+    cb1=enc(<nb1,~k XOR nb2>, pwb)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S) ,SA1($A,$B,pkA,pkB,ns),!Ltk($S, ltkA),!Ltk($S, ltkB),Fr(~k)
+    ,In(<aenc(<$A,$B,na1,na2,ca,enc(nss,pwa)>,pk(ltkA)),aenc(<$B,$A,nb1,nb2,cb,enc(nsss,pwb)>,pk(ltkB))>) ]
+  --[ Eq(pk(ltkA),pkA),Eq(pk(ltkB),pkB),Eq(nss,ns),Eq(ns,nsss)]->
+    [ Out(<ca1,cb1>)]
+
+
+rule BA1s:
+  let
+    m1 = dec(cb1, pwb)
+    nb1s = fst(m1)
+    sk = snd(m1) XOR nb2
+    cba1 = enc(<h(ra),rb>,sk)
+  in
+    [ !Own_BS(pwb,$B,$S),In(<ca1,cb1>),BS1($A,$B,cb,nb1,nb2,rb,ns,pkB,ra)]
+  --[ Eq(nb1s,nb1)]->
+    [ Out(<ca1,cba1>) ,!Save(sk) ]
+
+rule AB2s:
+  let
+    m1 = dec(ca1, pwa)
+    na1s = fst(m1)
+    sk = snd(m1) XOR na2
+    pl = dec(cba1,sk)
+
+
+    hhra = fst(pl)
+    rb = snd(pl)
+  in
+    [ !Own_AS(pwa,$A,$S),In(<ca1,cba1>),AB1($A,$B,ca,na1,na2,ra,ns,pkA)]
+  --[ Eq(na1s,na1),Eq(hhra,h(ra))]->
+    [ Out(<enc(h(rb),sk)>) ,!Save(sk)]
+
+
+rule Attack_test1:
+    [ In(c),In(m),!Own_AS(pwa,$A,$S) ]
+  --[ Eq(c,enc(m,pwa)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!Own_BS(pwb,$B,$S)]
+  --[ Eq(c,enc(m,pwb)),Attack_suc() ]->
+    [ ]
+rule Attack_test3:
+    [ In(c),In(m),!Save(k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end

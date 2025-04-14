@@ -1,0 +1,104 @@
+theory RPC begin
+
+
+
+/* 
+
+ Protocol:
+
+ 1. A -> B: na
+ 2. B -> A: nb
+ 3. A -> B: {A,B,na,nb}kas 
+ 4. B -> S: {A,B,na,nb}kas,{A,B,na,nb}kbs
+ 5. S -> B: {B,na,nb,kab}kas,{A,na,nb,kab}kbs
+ 6. B -> A: {B,na,nb,kab}kas,{na,nb}kab
+ 7. S -> B: {nb}kab
+
+*/
+functions: enc/2, dec/2,up/1
+equations: dec(enc(M,k), k) = M
+
+rule setup:
+  [ Fr(~k) ]
+--[ KeyGen($A,$B) ]->
+  [ !SharedKey($A, $B,~k) ]
+
+/*rule reveal:
+  [ !SharedKeyWithServer(X, k) ]
+--[ Reveal(X,k),Init_once('1') ]->
+  [ Out(k), Reveal(X,k)]
+*/
+
+rule AB1:
+  [ Fr(~na),!SharedKey($A, $B,kab)]
+--[  ]->
+  [ AB1($A,$B,~na), Out(enc(~na,kab)) ]
+
+
+rule BA2:
+let
+	na=dec(c,kab)
+	c1=enc(<up(na),~nb>,kab)
+in
+  [ Fr(~nb),In(c),!SharedKey($A,$B,kab)]
+--[  ]->
+  [ BA2($A,$B,~nb), Out(c1) ]
+
+
+rule AB3:
+let
+	m=dec(c,kab)
+	upnas=fst(m)
+	nb=snd(m)
+	c1=enc(up(nb),kab)
+in
+  [ AB1($A,$B,na),In(c),!SharedKey($A,$B,kab)]
+--[  Eq(upnas,up(na))]->
+  [  Out(c1) ]
+
+rule BA4:
+let
+	upnbs=dec(c,kab)
+	c1=enc(<~nb1,~kab1>,kab)
+in
+  [BA2($A,$B,nb),In(c),Fr(~nb1),Fr(~kab1),!SharedKey($A,$B,kab)]
+--[  Eq(upnbs,up(nb))]->
+  [  Out(c1) ]
+
+
+
+
+
+rule Attack_test:
+    [ In(c),In(m),!SharedKey($A,$B,kab)]
+  --[ Eq(c,enc(m,kab)),Attack_suc() ]->
+    [ ]
+   
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+/*
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+restriction Neq:
+"
+    All x #i. Neq(x,x) @ i ==> F
+"
+#ifdef timethis
+#endif
+*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end
+

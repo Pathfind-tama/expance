@@ -1,0 +1,1497 @@
+Running tamarin-prover on 9798_2_one.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 11 (precomputed): !KU( ~ta ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+OK.
+
+theory ISO9798_2_one begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~ta, ~ta>, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB1
+    solve( !KU( ~ta ) @ #vk.3 )
+      case AB1_case_1
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_2
+      by solve( !KU( ~k ) @ #vk.5 )
+    qed
+  next
+    case c_enc
+    by solve( !KU( ~k ) @ #vk.2 )
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_one.spthy
+
+  Test (exists-trace): falsified - no trace found (7 steps)
+
+==============================================================================
+
+real	0m0.082s
+user	0m0.074s
+sys	0m0.032s
+Finished processing 9798_2_one.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_2_three.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): BA1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~na ) @ #vk.4
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ Fr( ~nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~nb ), BA1( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB2:
+   [ In( nb ), Fr( ~na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<~na, nb, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA3:
+   [
+   In( enc(<fst(dec(c, kab)), nb>, kab) ), BA1( $A, $B, nb ),
+   !SharedKey( $A, $B, kab )
+   ]
+  --[ Eq( fst(snd(dec(c, kab))), nb ) ]->
+   [ Out( enc(<fst(dec(c, kab)), nb>, kab) ) ]
+
+  /*
+  rule (modulo AC) BA3:
+     [ In( enc(<z, nb>, kab) ), BA1( $A, $B, nb ), !SharedKey( $A, $B, kab ) ]
+    --[ Eq( z.1, nb ) ]->
+     [ Out( enc(<z, nb>, kab) ) ]
+  */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB2
+    solve( !KU( ~na ) @ #vk.4 )
+      case AB2
+      by solve( !KU( ~k ) @ #vk.6 )
+    qed
+  next
+    case c_enc
+    by solve( !KU( ~k ) @ #vk.2 )
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_three.spthy
+
+  Test (exists-trace): falsified - no trace found (6 steps)
+
+==============================================================================
+
+real	0m0.083s
+user	0m0.101s
+sys	0m0.008s
+Finished processing 9798_2_three.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_2_two1.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): BA1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ Fr( ~nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~nb ), BA1( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB2:
+   [ In( nb ), !SharedKey( $A, $B, kab ) ] --> [ Out( enc(<nb, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB2
+    SOLVED // trace found
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_two1.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.082s
+user	0m0.089s
+sys	0m0.016s
+Finished processing 9798_2_two1.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_2_two2.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 11 (precomputed): !KU( ~ta ) @ #vk.3
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 12 (precomputed): !KU( ~tb ) @ #vk.4
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 15 (precomputed): !KU( ~k ) @ #vk.5
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+  solved goal nr. 17 (precomputed): !KU( ~k ) @ #vk.6
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~ta, ~ta>, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ In( c ), Fr( ~tb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( enc(<<~tb, ~tb>, $A>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB1
+    solve( !KU( ~ta ) @ #vk.3 )
+      case AB1_case_1
+      by solve( !KU( ~k ) @ #vk.5 )
+    next
+      case AB1_case_2
+      by solve( !KU( ~k ) @ #vk.5 )
+    qed
+  next
+    case BA1
+    solve( !KU( ~tb ) @ #vk.4 )
+      case BA1_case_1
+      by solve( !KU( ~k ) @ #vk.6 )
+    next
+      case BA1_case_2
+      by solve( !KU( ~k ) @ #vk.6 )
+    qed
+  next
+    case c_enc
+    by solve( !KU( ~k ) @ #vk.2 )
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_two2.spthy
+
+  Test (exists-trace): falsified - no trace found (10 steps)
+
+==============================================================================
+
+real	0m0.093s
+user	0m0.117s
+sys	0m0.017s
+Finished processing 9798_2_two2.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_4_one.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( HMAC(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( HMAC(m, ~k) ) @ #vk
+  solved goal nr. 10 (precomputed): !KU( ~ta ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+OK.
+
+theory ISO9798_2_one begin
+
+// Function signature and definition of the equational theory E
+
+functions: HMAC/2, dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( <HMAC(<~ta, $B>, kab), ~ta> ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( HMAC(m, ~k) ) @ #vk )
+    case AB1
+    solve( !KU( ~ta ) @ #vk.2 )
+      case AB1
+      SOLVED // trace found
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_4_one.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m0.072s
+user	0m0.060s
+sys	0m0.010s
+Finished processing 9798_4_one.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_4_three.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation: OK.
+
+  solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): BA1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( HMAC(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 7 (directly): BA1( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 8 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 11 (directly):
+    !SharedKey( $A.10, $B.10, kab.16 ) ▶₁ #vr.15
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( HMAC(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (precomputed): !KU( ~na ) @ #vk.4
+  solved goal nr. 9 (precomputed):
+    !KU( HMAC(<na, ~nb, $B>, ~k) ) @ #vk.3
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: HMAC/2, dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ Fr( ~nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~nb ), BA1( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB2:
+   [ In( nb ), Fr( ~na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( <HMAC(<~na, nb, $B>, kab), ~na> ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA3:
+   [ In( <c, na> ), BA1( $A, $B, nb ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(<na, nb, $B>, kab) ) ]->
+   [ Out( HMAC(<na, nb>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( HMAC(m, ~k) ) @ #vk )
+    case AB2
+    solve( !KU( ~na ) @ #vk.4 )
+      case AB2
+      SOLVED // trace found
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+  solved goal nr. 19 (precomputed): !KU( ~k ) @ #vk.8
+analyzed: 9798_4_three.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m0.093s
+user	0m0.109s
+sys	0m0.030s
+Finished processing 9798_4_three.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_4_two1.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): BA1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( HMAC(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( HMAC(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: HMAC/2, dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ Fr( ~nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~nb ), BA1( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB2:
+   [ In( nb ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( HMAC(<nb, $B>, kab) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( HMAC(m, ~k) ) @ #vk )
+    case AB2
+    SOLVED // trace found
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_4_two1.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.092s
+user	0m0.089s
+sys	0m0.049s
+Finished processing 9798_4_two1.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on 9798_4_two2.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( HMAC(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 7 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 7 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( HMAC(m, ~k) ) @ #vk
+  solved goal nr. 10 (precomputed): !KU( ~ta ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 9 (precomputed): !KU( HMAC(<ta, $B>, ~k) ) @ #vk.3
+OK.
+
+theory 9798two2 begin
+
+// Function signature and definition of the equational theory E
+
+functions: HMAC/2, dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~ta ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( HMAC(<~ta, $B>, kab) ), Out( ~ta ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA1:
+   [ In( <c, ta> ), Fr( ~tb ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(<ta, $B>, kab) ) ]->
+   [ Out( HMAC(<~tb, $A>, kab) ), Out( ~tb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, HMAC(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( HMAC(m, ~k) ) @ #vk )
+    case AB1
+    solve( !KU( ~ta ) @ #vk.2 )
+      case AB1
+      SOLVED // trace found
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_4_two2.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m0.092s
+user	0m0.092s
+sys	0m0.027s
+Finished processing 9798_4_two2.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on BREVE1.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): AB1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 0 (directly): BA2( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 3 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₂ #vr.4
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 7 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 8 (directly): AB1( $A.10, $B.10, na.10 ) ▶₂ #vr.9
+  solved goal nr. 11 (directly):
+    !SharedKey( $A.10, $B.10, kab.20 ) ▶₁ #vr.19
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 10 (precomputed):
+    !KU( enc(<x, x.1, ~na, nb>, ~k) ) @ #vk.4
+  solved goal nr. 16 (precomputed): !KU( ~nb ) @ #vk.7
+  solved goal nr. 19 (precomputed): !KU( ~k ) @ #vk.8
+  solved goal nr. 18 (precomputed): !KU( ~na ) @ #vk.6
+  solved goal nr. 20 (precomputed):
+    !KU( enc(<x.1, x.2, ~na.1, x, ~na, nb>, ~k) ) @ #vk.9
+  solved goal nr. 30 (precomputed): !KU( ~k ) @ #vk.14
+  solved goal nr. 31 (precomputed):
+    !KU( enc(<x.2, x.3, ~na.2, x.1, ~na.1, x, ~na, nb>, ~k) ) @ #vk.15
+  solved goal nr. 45 (precomputed): !KU( ~k ) @ #vk.20
+  solved goal nr. 46 (precomputed):
+    !KU( enc(<x.3, x.4, ~na.3, x.2, ~na.2, x.1, ~na.1, x, ~na, nb>, ~k)
+    ) @ #vk.21
+  solved goal nr. 64 (precomputed): !KU( ~k ) @ #vk.26
+  solved goal nr. 65 (precomputed):
+    !KU( enc(<x.4, x.5, ~na.4, x.3, ~na.3, x.2, ~na.2, x.1, ~na.1, x, 
+              ~na, nb>,
+             ~k)
+    ) @ #vk.27
+  solved goal nr. 20 (precomputed): !KU( ~nb ) @ #vk.5
+  solved goal nr. 25 (precomputed): !KU( ~k ) @ #vk.7
+OK.
+
+theory MAP1 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~na ), AB1( $A, $B, ~na ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA2:
+   [ Fr( ~nb ), In( na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( <~nb, enc(<$A, $B, na, ~nb>, kab)> ), BA2( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB3:
+   [ In( <nb, c> ), !SharedKey( $A, $B, kab ), AB1( $A, $B, na ) ]
+  --[
+  Eq( fst(snd(snd(dec(c, kab)))), na ),
+  Eq( snd(snd(snd(dec(c, kab)))), nb )
+  ]->
+   [ Out( enc(<$A, nb>, kab) ) ]
+
+  /*
+  rule (modulo AC) AB3:
+     [ In( <nb, c> ), !SharedKey( $A, $B, kab ), AB1( $A, $B, na ) ]
+    --[ Eq( z, na ), Eq( z.1, nb ) ]->
+     [ Out( enc(<$A, nb>, kab) ) ]
+    variants (modulo AC)
+    1. c     = c.9
+       kab   = kab.9
+       z     = fst(snd(snd(dec(c.9, kab.9))))
+       z.1   = snd(snd(snd(dec(c.9, kab.9))))
+    
+    2. c     = enc(x.9, x.10)
+       kab   = x.10
+       z     = fst(snd(snd(x.9)))
+       z.1   = snd(snd(snd(x.9)))
+    
+    3. c     = enc(<x.9, x.10>, x.11)
+       kab   = x.11
+       z     = fst(snd(x.10))
+       z.1   = snd(snd(x.10))
+    
+    4. c     = enc(<x.9, x.10, x.11>, x.12)
+       kab   = x.12
+       z     = fst(x.11)
+       z.1   = snd(x.11)
+    
+    5. c     = enc(<x.9, x.10, x.11, x.12>, x.13)
+       kab   = x.13
+       z     = x.11
+       z.1   = x.12
+  */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB3
+    solve( !KU( enc(<x, x.1, ~na, nb>, ~k) ) @ #vk.4 )
+      case BA2
+      solve( !KU( ~na ) @ #vk.6 )
+        case AB1
+        solve( !KU( ~nb ) @ #vk.5 )
+          case BA2_case_1
+          SOLVED // trace found
+        qed
+      qed
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: BREVE1.spthy
+
+  Test (exists-trace): verified (7 steps)
+
+==============================================================================
+
+real	0m0.382s
+user	0m0.763s
+sys	0m0.106s
+Finished processing BREVE1.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on BRMAP1.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly): !SharedKey( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): AB1( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 0 (directly): BA2( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 2 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₁ #vr.4
+  solved goal nr. 3 (directly):
+    !SharedKey( $A.5, $B.5, kab.5 ) ▶₂ #vr.4
+  solved goal nr. 4 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKey( $A.7, $B.7, kab.7 ) ▶₂ #vr.6
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 7 (directly):
+    !SharedKey( $A.10, $B.10, t.2 ) ▶₁ #vr.9
+  solved goal nr. 8 (directly): AB1( $A.10, $B.10, na.10 ) ▶₂ #vr.9
+  solved goal nr. 11 (directly):
+    !SharedKey( $A.10, $B.10, kab.20 ) ▶₁ #vr.19
+  solved goal nr. 4 (precomputed): !SharedKey( $A, $B, kab ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 10 (precomputed):
+    !KU( enc(<x, x.1, ~na, nb>, ~k) ) @ #vk.4
+  solved goal nr. 16 (precomputed): !KU( ~nb ) @ #vk.7
+  solved goal nr. 19 (precomputed): !KU( ~k ) @ #vk.8
+  solved goal nr. 20 (precomputed):
+    !KU( enc(<x.1, x.2, ~na.1, x, ~na, nb>, ~k) ) @ #vk.9
+  solved goal nr. 18 (precomputed): !KU( ~na ) @ #vk.6
+  solved goal nr. 30 (precomputed): !KU( ~k ) @ #vk.14
+  solved goal nr. 31 (precomputed):
+    !KU( enc(<x.2, x.3, ~na.2, x.1, ~na.1, x, ~na, nb>, ~k) ) @ #vk.15
+  solved goal nr. 45 (precomputed): !KU( ~k ) @ #vk.20
+  solved goal nr. 46 (precomputed):
+    !KU( enc(<x.3, x.4, ~na.3, x.2, ~na.2, x.1, ~na.1, x, ~na, nb>, ~k)
+    ) @ #vk.21
+  solved goal nr. 64 (precomputed): !KU( ~k ) @ #vk.26
+  solved goal nr. 65 (precomputed):
+    !KU( enc(<x.4, x.5, ~na.4, x.3, ~na.3, x.2, ~na.2, x.1, ~na.1, x, 
+              ~na, nb>,
+             ~k)
+    ) @ #vk.27
+  solved goal nr. 20 (precomputed): !KU( ~nb ) @ #vk.5
+  solved goal nr. 25 (precomputed): !KU( ~k ) @ #vk.7
+OK.
+
+theory MAP1 begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A, $B ) ]-> [ !SharedKey( $A, $B, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB1:
+   [ Fr( ~na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( ~na ), AB1( $A, $B, ~na ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BA2:
+   [ Fr( ~nb ), In( na ), !SharedKey( $A, $B, kab ) ]
+  -->
+   [ Out( <~nb, enc(<$B, $A, na, ~nb>, kab)> ), BA2( $A, $B, ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB3:
+   [ In( <nb, c> ), !SharedKey( $A, $B, kab ), AB1( $A, $B, na ) ]
+  --[
+  Eq( fst(snd(snd(dec(c, kab)))), na ),
+  Eq( snd(snd(snd(dec(c, kab)))), nb )
+  ]->
+   [ Out( enc(<$A, nb>, kab) ) ]
+
+  /*
+  rule (modulo AC) AB3:
+     [ In( <nb, c> ), !SharedKey( $A, $B, kab ), AB1( $A, $B, na ) ]
+    --[ Eq( z, na ), Eq( z.1, nb ) ]->
+     [ Out( enc(<$A, nb>, kab) ) ]
+    variants (modulo AC)
+    1. c     = c.9
+       kab   = kab.9
+       z     = fst(snd(snd(dec(c.9, kab.9))))
+       z.1   = snd(snd(snd(dec(c.9, kab.9))))
+    
+    2. c     = enc(x.9, x.10)
+       kab   = x.10
+       z     = fst(snd(snd(x.9)))
+       z.1   = snd(snd(snd(x.9)))
+    
+    3. c     = enc(<x.9, x.10>, x.11)
+       kab   = x.11
+       z     = fst(snd(x.10))
+       z.1   = snd(snd(x.10))
+    
+    4. c     = enc(<x.9, x.10, x.11>, x.12)
+       kab   = x.12
+       z     = fst(x.11)
+       z.1   = snd(x.11)
+    
+    5. c     = enc(<x.9, x.10, x.11, x.12>, x.13)
+       kab   = x.13
+       z     = x.11
+       z.1   = x.12
+  */
+
+rule (modulo E) Attack_test1:
+   [ In( c ), In( m ), !SharedKey( $A, $B, kab ) ]
+  --[ Eq( c, enc(m, kab) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKey( $A, $B, kab ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB3
+    solve( !KU( enc(<x, x.1, ~na, nb>, ~k) ) @ #vk.4 )
+      case BA2
+      solve( !KU( ~na ) @ #vk.6 )
+        case AB1
+        solve( !KU( ~nb ) @ #vk.5 )
+          case BA2_case_1
+          SOLVED // trace found
+        qed
+      qed
+    qed
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: BRMAP1.spthy
+
+  Test (exists-trace): verified (7 steps)
+
+==============================================================================
+
+real	0m0.183s
+user	0m0.298s
+sys	0m0.088s
+Finished processing BRMAP1.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+
+Running tamarin-prover on Woo-LAM.spthy...
+maude tool: 'maude'
+ checking version: 2.7.1. OK.
+ checking installation:   solved goal nr. 0 (directly): Attack_suc( ) @ #j
+  solved goal nr. 0 (directly):
+    !SharedKeyWithServer( t.1, t.2 ) ▶₀ #i
+  solved goal nr. 0 (directly):
+    ResponderWaitConfirm( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 0 (directly): InitiatorRequested( t.1, t.2 ) ▶₀ #i
+  solved goal nr. 0 (directly):
+    ResponderWaitConfirm2( t.1, t.2, t.3 ) ▶₀ #i
+  solved goal nr. 3 (directly):
+    !SharedKeyWithServer( $B.5, kbs.5 ) ▶₁ #vr.4
+  solved goal nr. 2 (directly):
+    !SharedKeyWithServer( $A.4, kas.4 ) ▶₀ #vr.3
+  solved goal nr. 0 (directly): !KU( ~t.1 ) @ #i
+  solved goal nr. 3 (directly):
+    ResponderWaitConfirm( $A.5, $B.5, t.3 ) ▶₁ #vr.4
+  solved goal nr. 4 (directly):
+    !SharedKeyWithServer( $B.5, kbs.5 ) ▶₂ #vr.4
+  solved goal nr. 7 (directly):
+    !SharedKeyWithServer( $B.5, kbs.9 ) ▶₁ #vr.8
+  solved goal nr. 0 (directly): !KU( dec(t.1, t.2) ) @ #i
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₁ #vr.6
+  solved goal nr. 0 (directly): !KU( enc(t.1, t.2) ) @ #i
+  solved goal nr. 0 (directly): !KU( fst(t.1) ) @ #i
+  solved goal nr. 5 (directly):
+    InitiatorRequested( $A.10, $B.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $A.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 9 (directly):
+    !SharedKeyWithServer( $A.10, kas.14 ) ▶₀ #vr.13
+  solved goal nr. 5 (directly):
+    ResponderWaitConfirm( $A.10, $B.10, nb.10 ) ▶₁ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 9 (directly):
+    !SharedKeyWithServer( $B.10, kbs.14 ) ▶₁ #vr.13
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, kbs.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 0 (directly): !KU( snd(t.1) ) @ #i
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, t.2 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.10, kas.10 ) ▶₁ #vr.9
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.10, kbs.10 ) ▶₂ #vr.9
+  solved goal nr. 5 (directly):
+    !SharedKeyWithServer( $A.7, kas.7 ) ▶₁ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 6 (directly):
+    !SharedKeyWithServer( $B.7, kbs.7 ) ▶₂ #vr.6
+  solved goal nr. 3 (directly): splitEqs(0)
+  solved goal nr. 4 (precomputed):
+    !SharedKeyWithServer( $B, kbs ) ▶₂ #j
+  solved goal nr. 5 (precomputed): !KU( enc(m, ~k) ) @ #vk
+  solved goal nr. 9 (precomputed): !KU( ~k ) @ #vk.2
+  solved goal nr. 11 (directly): splitEqs(1)
+OK.
+
+theory Woo_LAM begin
+
+// Function signature and definition of the equational theory E
+
+functions: dec/2, enc/2, fst/1, pair/2, snd/1
+equations:
+    dec(enc(M, k), k) = M,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+rule (modulo E) setup:
+   [ Fr( ~k ) ] --[ KeyGen( $A ) ]-> [ !SharedKeyWithServer( $A, ~k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator1Request:
+   [ !SharedKeyWithServer( $A, kas ) ]
+  -->
+   [ InitiatorRequested( $A, $B ), Out( $A ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) B2A:
+   [ In( $A ), !SharedKeyWithServer( $B, kbs ), Fr( ~nb ) ]
+  -->
+   [ ResponderWaitConfirm( $A, $B, ~nb ), Out( ~nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) AB3:
+   [ In( nb ), InitiatorRequested( $A, $B ), !SharedKeyWithServer( $A, kas )
+   ]
+  -->
+   [ Out( enc(nb, kas) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) BS4:
+   [
+   In( c ), ResponderWaitConfirm( $A, $B, nb ),
+   !SharedKeyWithServer( $B, kbs )
+   ]
+  -->
+   [ Out( enc(<$A, c>, kbs) ), ResponderWaitConfirm2( $A, $B, nb ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Server:
+   [
+   In( c ), !SharedKeyWithServer( $A, kas ), !SharedKeyWithServer( $B, kbs )
+   ]
+  --[ Eq( fst(dec(c, kbs)), $A ) ]->
+   [ Out( enc(dec(c, kas), kbs) ) ]
+
+  /*
+  rule (modulo AC) Server:
+     [
+     In( c ), !SharedKeyWithServer( $A, kas ), !SharedKeyWithServer( $B, kbs )
+     ]
+    --[ Eq( z.1, $A ) ]->
+     [ Out( enc(z, kbs) ) ]
+    variants (modulo AC)
+    1. c     = c.8
+       kas   = kas.8
+       kbs   = kbs.8
+       z     = dec(c.8, kas.8)
+       z.1   = fst(dec(c.8, kbs.8))
+    
+    2. c     = enc(x.8, x.9)
+       kas   = x.9
+       kbs   = x.9
+       z     = x.8
+       z.1   = fst(x.8)
+    
+    3. c     = enc(x.8, x.9)
+       kas   = x.9
+       kbs   = kbs.10
+       z     = x.8
+       z.1   = fst(dec(enc(x.8, x.9), kbs.10))
+    
+    4. c     = enc(x.8, x.9)
+       kas   = kas.10
+       kbs   = x.9
+       z     = dec(enc(x.8, x.9), kas.10)
+       z.1   = fst(x.8)
+    
+    5. c     = enc(<x.8, x.9>, x.10)
+       kas   = x.10
+       kbs   = x.10
+       z     = <x.8, x.9>
+       z.1   = x.8
+    
+    6. c     = enc(<x.8, x.9>, x.10)
+       kas   = kas.11
+       kbs   = x.10
+       z     = dec(enc(<x.8, x.9>, x.10), kas.11)
+       z.1   = x.8
+  */
+
+rule (modulo E) B5:
+   [
+   In( c2 ), ResponderWaitConfirm2( $A, $B, nb ),
+   !SharedKeyWithServer( $B, kbs )
+   ]
+  --[ Eq( dec(c2, kbs), nb ) ]->
+   [ ]
+
+  /*
+  rule (modulo AC) B5:
+     [
+     In( c2 ), ResponderWaitConfirm2( $A, $B, nb ),
+     !SharedKeyWithServer( $B, kbs )
+     ]
+    --[ Eq( z, nb ) ]->
+     [ ]
+    variants (modulo AC)
+    1. c2    = c2.7
+       kbs   = kbs.7
+       z     = dec(c2.7, kbs.7)
+    
+    2. c2    = enc(x.7, x.8)
+       kbs   = x.8
+       z     = x.7
+  */
+
+rule (modulo E) Attack_test:
+   [ In( c ), In( m ), !SharedKeyWithServer( $B, kbs ) ]
+  --[ Eq( c, enc(m, kbs) ), Attack_suc( ) ]->
+   [ ]
+
+  /* has exactly the trivial AC variant */
+
+restriction Verif:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+lemma Test:
+  exists-trace "∃ #j. Attack_suc( ) @ #j"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ #j. (Attack_suc( ) @ #j)"
+*/
+simplify
+solve( !SharedKeyWithServer( $B, kbs ) ▶₂ #j )
+  case setup
+  solve( !KU( enc(m, ~k) ) @ #vk )
+    case AB3
+    SOLVED // trace found
+  qed
+qed
+
+/* All well-formedness checks were successful. */
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: Woo-LAM.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.132s
+user	0m0.208s
+sys	0m0.033s
+Finished processing Woo-LAM.spthy
+------------------------------------------------------------
+============================== END ==========================
+------------------------------------------------------------
+

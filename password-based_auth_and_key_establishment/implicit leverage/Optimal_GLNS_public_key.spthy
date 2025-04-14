@@ -1,0 +1,91 @@
+theory Simplifie_GLNS_secret_public
+begin
+builtins:	asymmetric-encryption,symmetric-encryption
+functions: h/1
+
+rule Password_init:
+    [ Fr(~pwa),Fr(~pwb) ]
+  --[ Init_pw_once() ]->
+    [ !Own_AS(~pwa,$A,$S),!Own_BS(~pwb,$B,$S) ]
+
+rule Register_pk:
+	[ Fr(~ltk) ]
+	-->
+	[ !Ltk($A, ~ltk), !Pk($A, pk(~ltk)) ]
+
+rule AB1s:
+let
+  c = senc(pkA,pwa)
+in
+    [ !Own_AS(pwa,$A,$S),!Pk($A, pkA),Fr(~na)]
+  --[ ]->
+    [ Out(<c,~na>),AB1($A,$B,~na,pkA) ]
+
+
+rule BS1s:
+  let
+    c1 = senc(pkB,pwb)
+  in
+    [ !Own_BS(pwb,$B,$S),!Pk($B, pkB), In(<na,c>),Fr(~nb)
+    ]
+  --[ ]->
+    [ Out(<na,c,~nb,c1>),BS1($A,$B,na,~nb,pkB)  ]
+
+
+rule SB1s:
+  let
+    pkA = sdec(c,pwa)
+    pkB = sdec(c11,pwb)
+    sbc1 = aenc(<$A,$B,~c1,~k,senc(na,pwa)>,pkA)
+    sbc2 = aenc(<$B,$A,~c2,~k,senc(nb,pwb)>,pkB)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S),Fr(~k),In(<na,c,nb,c11>),Fr(~c1),Fr(~c2) ]
+  --[ ]->
+    [ Out(<sbc1,sbc2>) ,!Save(~k)]
+
+rule BA1s:
+  let
+    cna = senc(na,k)
+  in
+    [ !Own_BS(pwb,$B,$S),BS1($A,$B,na,nb,pkB) ,In(<sbc1,aenc(<$B,$A,c2,k,senc(nbs,pwb)>,pk(ltkB))>),!Ltk($B, ltkB) ]
+  --[ Eq(pk(ltkB),pkB),Eq(nbs,nb)]->
+    [ Out(<sbc1,cna,nb>)]
+
+
+rule AB2s:
+  let
+    nass = sdec(cna,k)
+  in
+    [ !Own_AS(pwa,$A,$S),AB1($A,$B,na,pkA),!Ltk($A, ltkA),In(<aenc(<$A,$B,c1,k,senc(nas,pwa)>,pk(ltkA)),cna,nb>) ]
+  --[ Eq(pk(ltkA),pkA),Eq(nas,na),Eq(nass,na)]->
+    [ Out(<senc(nb,k)>)]
+
+
+rule Guess_pw:
+    [Fr(~pw_guess),!Own_AS(pwa,$A,$S)]
+  --[Init_once('x')]->
+    [Out(diff(~pw_guess,pwa))]
+
+rule RR:
+    [In(pk(r))]
+  --[]->
+    [Out('DF1')]
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+
+end

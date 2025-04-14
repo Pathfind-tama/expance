@@ -1,0 +1,100 @@
+theory GLNS_compact
+begin
+builtins:	asymmetric-encryption,xor,symmetric-encryption
+functions: h/1
+
+rule Password_init:
+    [ Fr(~pwa),Fr(~pwb) ]
+  --[ Init_pw_once() ]->
+    [ !Own_AS(~pwa,$A,$S),!Own_BS(~pwb,$B,$S) ]
+
+rule Register_pk:
+	[ Fr(~ltk) ]
+	-->
+	[ !Ltk($A, ~ltk), !Pk($A, pk(~ltk)),Out(pk(~ltk)) ]
+
+rule AB1s:
+  let
+    c = aenc(<$A,$B,~na1,~na2,~ca,senc(<~ta,~ta>,pwa)>,pkS)
+  in
+    [ !Own_AS(pwa,$A,$S),!Pk($S, pkS),Fr(~na1),Fr(~na2),Fr(~ca),Fr(~ta),Fr(~ra) ]
+  --[ ]->
+    [ Out(<c,~ra>),AB1($A,$B,~na1,~na2,~ca,~ta,~ra,pwa) ]
+
+rule BS1s:
+  let
+    c1 = aenc(<$A,$B,~nb1,~nb2,~cb,senc(<~tb,~tb>,pwb)>,pkS)
+  in
+    [ !Own_BS(pwb,$B,$S),!Pk($S, pkS),Fr(~nb1),Fr(~nb2),Fr(~cb),Fr(~tb),In(<c,ra>) ]
+  --[ ]->
+    [ Out(<c,c1>),BS1($A,$B,~nb1,~nb2,~cb,~tb,ra,pwb) ]
+
+
+rule SB1s:
+  let
+    c1 = senc(<na1,na2 XOR ~k>,pwa)
+    c2 = senc(<nb1,nb2 XOR ~k>,pwb)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S),!Ltk($S,ltk),Fr(~k)
+    ,In(<aenc(<$A,$B,nb1,nb2,cb,senc(<tb,tb>,pwb)>,pk(ltk)),aenc(<$A,$B,na1,na2,ca,senc(<ta,ta>,pwa)>,pk(ltk))>) 
+    ]
+  --[ ]->
+    [ Out(<c1,c2>) ]
+
+rule BA1s:
+  let
+ 	k = y XOR nb2
+    ver = senc(<h(ra),~rb>,k)
+  in
+    [ !Own_BS(pwb,$B,$S),BS1($A,$B,nb1,nb2,cb,tb,ra,pwb),In(<c1,senc(<nb1,y>,pwb)>),Fr(~rb) ]
+  --[  ]->
+    [ Out(<ver,c1>),!Save(k)]
+
+
+rule AB2s:
+  let
+  	k = y XOR na2
+    vers = fst(sdec(ver,k))
+    rb = snd(sdec(ver,k))
+    c = senc(h(rb),k)
+  in
+    [ !Own_AS(pwa,$A,$S),AB1($A,$B,na1,na2,ca,ta,ra,pwa),In(<senc(<na1,y>,pwa),ver>) ]
+  --[ Eq(vers,ra)]->
+    [ Out(c)]
+
+
+
+rule Guess_pw:
+    [Fr(~pw_guess),!Own_AS(pwa,$A,$S)]
+  --[Init_once('x')]->
+    [Out(diff(~pw_guess,pwa))]
+/*
+rule RR:
+    [In(<'g'^r,r>)]
+  --[]->
+    [Out('DF1')]*/
+
+restriction Init:
+" 
+   All #i #j x. Init_once(x)@i & Init_once(x)@j ==> #i=#j
+"
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init_1:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+
+end

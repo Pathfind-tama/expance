@@ -1,0 +1,91 @@
+
+==============================================================================
+summary of summaries:
+
+analyzed: Bellare-Rogaway_3PKD.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.705s
+user	0m1.771s
+sys	0m0.389s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Gong_nonce.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m1.256s
+user	0m3.433s
+sys	0m0.608s
+  solved goal nr. 47 (precomputed): !KU( ~k.7 ) @ #vk.25
+  solved goal nr. 46 (precomputed): !KU( ~k.6 ) @ #vk.24
+  solved goal nr. 47 (precomputed): !KU( ~k.7 ) @ #vk.25
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+  solved goal nr. 40 (precomputed): !KU( ~k.4 ) @ #vk.22
+
+real	1m0.198s
+user	3m19.350s
+sys	0m29.665s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Janson_Tsudik_3PKDP_optimised.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m10.754s
+user	0m32.795s
+sys	0m5.612s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Janson_Tsudik_3PKDP.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m22.259s
+user	1m12.236s
+sys	0m11.387s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Woo-Lam.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m1.590s
+user	0m4.024s
+sys	0m0.702s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Yahalom_Bur.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.614s
+user	0m1.482s
+sys	0m0.211s

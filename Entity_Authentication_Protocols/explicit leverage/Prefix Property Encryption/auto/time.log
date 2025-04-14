@@ -1,0 +1,52 @@
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_one.spthy
+
+  Test (exists-trace): falsified - no trace found (45 steps)
+
+==============================================================================
+
+real	0m1.743s
+user	0m2.629s
+sys	0m0.364s
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_three.spthy
+
+  Test (exists-trace): verified (6 steps)
+  Test2 (exists-trace): verified (6 steps)
+
+==============================================================================
+
+real	0m10.734s
+user	0m16.774s
+sys	0m1.458s
+
+==============================================================================
+summary of summaries:
+
+analyzed: 9798_2_two2.spthy
+
+  Test (exists-trace): falsified - no trace found (86 steps)
+
+==============================================================================
+
+real	0m3.522s
+user	0m5.830s
+sys	0m0.446s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Woo-LAM.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.478s
+user	0m0.524s
+sys	0m0.069s

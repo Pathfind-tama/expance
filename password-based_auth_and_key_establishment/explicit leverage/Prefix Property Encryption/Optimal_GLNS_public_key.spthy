@@ -1,0 +1,106 @@
+theory Simplifie_GLNS_secret_public
+begin
+builtins:	asymmetric-encryption
+functions: h/1, enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+
+rule Password_init:
+    [ Fr(~pwa),Fr(~pwb) ]
+  --[ Init_pw_once() ]->
+    [ !Own_AS(~pwa,$A,$S),!Own_BS(~pwb,$B,$S) ]
+
+rule Register_pk:
+	[ Fr(~ltk) ]
+	-->
+	[ !Ltk($A, ~ltk), !Pk($A, pk(~ltk)) ]
+
+rule AB1s:
+let
+  c = enc(pkA,pwa)
+in
+    [ !Own_AS(pwa,$A,$S),!Pk($A, pkA),Fr(~na)]
+  --[ ]->
+    [ Out(<c,~na>),AB1($A,$B,~na,pkA) ]
+
+
+rule BS1s:
+  let
+    c1 = enc(pkB,pwb)
+  in
+    [ !Own_BS(pwb,$B,$S),!Pk($B, pkB), In(<na,c>),Fr(~nb)
+    ]
+  --[ ]->
+    [ Out(<na,c,~nb,c1>),BS1($A,$B,na,~nb,pkB)  ]
+
+
+rule SB1s:
+  let
+    pkA = dec(c,pwa)
+    pkB = dec(c11,pwb)
+    sbc1 = aenc(<$A,$B,~c1,~k,enc(na,pwa)>,pkA)
+    sbc2 = aenc(<$B,$A,~c2,~k,enc(nb,pwb)>,pkB)
+  in
+    [ !Own_AS(pwa,$A,$S),!Own_BS(pwb,$B,$S),Fr(~k),In(<na,c,nb,c11>),Fr(~c1),Fr(~c2) ]
+  --[ ]->
+    [ Out(<sbc1,sbc2>) ,!Save(~k)]
+
+rule BA1s:
+  let
+    cna = enc(na,k)
+  in
+    [ !Own_BS(pwb,$B,$S),BS1($A,$B,na,nb,pkB) ,In(<sbc1,aenc(<$B,$A,c2,k,enc(nbs,pwb)>,pk(ltkB))>),!Ltk($B, ltkB) ]
+  --[ Eq(pk(ltkB),pkB),Eq(nbs,nb)]->
+    [ Out(<sbc1,cna,nb>)]
+
+
+rule AB2s:
+  let
+    nass = dec(cna,k)
+  in
+    [ !Own_AS(pwa,$A,$S),AB1($A,$B,na,pkA),!Ltk($A, ltkA),In(<aenc(<$A,$B,c1,k,enc(nas,pwa)>,pk(ltkA)),cna,nb>) ]
+  --[ Eq(pk(ltkA),pkA),Eq(nas,na),Eq(nass,na)]->
+    [ Out(<enc(nb,k)>)]
+
+
+
+
+rule Attack_test1:
+    [ In(c),In(m),!Own_AS(pwa,$A,$S) ]
+  --[ Eq(c,enc(m,pwa)),Attack_suc() ]->
+    [ ]
+
+rule Attack_test2:
+    [ In(c),In(m),!Own_BS(pwb,$B,$S)]
+  --[ Eq(c,enc(m,pwb)),Attack_suc() ]->
+    [ ]
+rule Attack_test3:
+    [ In(c),In(m),!Save(k) ]
+  --[ Eq(c,enc(m,k)),Attack_suc() ]->
+    [ ]
+
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end

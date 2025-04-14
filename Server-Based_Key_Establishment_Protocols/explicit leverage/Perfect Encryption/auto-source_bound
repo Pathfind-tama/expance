@@ -1,0 +1,116 @@
+
+> time tamarin-prover --prove --auto-source Denning-Sacco.spthy
+
+==============================================================================
+summary of summaries:
+
+analyzed: Denning-Sacco.spthy
+
+  AUTO_typing (all-traces): verified (15 steps)
+  Test (exists-trace): falsified - no trace found (24 steps)
+
+==============================================================================
+
+real	0m0.323s
+user	0m0.727s
+sys	0m0.155s
+
+
+
+
+
+
+
+> time tamarin-prover --prove --auto-source Wide_Mouthed_Frog.spthy 
+
+==============================================================================
+summary of summaries:
+
+analyzed: Wide_Mouthed_Frog.spthy
+
+  AUTO_typing (all-traces): falsified - found trace (7 steps)
+  Test (exists-trace): falsified - no trace found (38 steps)
+
+==============================================================================
+
+real	0m2.283s
+user	0m3.538s
+sys	0m0.315s
+
+
+
+
+> time tamarin-prover --prove --auto-source --bound=10 KerberosBasic.spthy 
+
+==============================================================================
+summary of summaries:
+
+analyzed: KerberosBasic.spthy
+
+  AUTO_typing (all-traces): analysis incomplete (3662 steps)
+  Test2 (exists-trace): analysis incomplete (341281 steps)
+
+==============================================================================
+
+real	85m9.238s
+user	240m18.056s
+sys	50m17.743s
+
+
+
+
+> time tamarin-prover --prove --auto-source Yahalom.spthy
+==============================================================================
+summary of summaries:
+
+analyzed: Yahalom.spthy
+
+  AUTO_typing (all-traces): falsified - found trace (8 steps)
+  Test (exists-trace): falsified - no trace found (43 steps)
+
+==============================================================================
+
+real	0m7.754s
+user	0m12.980s
+sys	0m1.217s
+
+
+
+
+
+
+
+> time tamarin-prover --prove --auto-source Otway_Rees.spthy
+==============================================================================
+summary of summaries:
+
+analyzed: Otway_Rees.spthy
+
+  AUTO_typing (all-traces): verified (43591 steps)
+  Test (exists-trace): falsified - no trace found (76 steps)
+
+==============================================================================
+
+real	14m19.218s
+user	24m32.847s
+sys	1m57.907s
+
+
+
+
+
+
+
+> time tamarin-prover --prove Janson_Tsudik_3PKDP.spthy
+==============================================================================
+summary of summaries:
+
+analyzed: Janson_Tsudik_3PKDP.spthy
+
+  Test (exists-trace): falsified - no trace found (1014 steps)
+
+==============================================================================
+
+real	0m20.893s
+user	0m35.531s
+sys	0m2.383s

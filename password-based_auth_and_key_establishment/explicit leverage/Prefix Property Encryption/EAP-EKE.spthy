@@ -1,0 +1,92 @@
+theory EAPEKE
+begin
+builtins:diffie-hellman
+functions: enc/2, dec/2, prefix/1
+equations: dec(enc(M,k), k) = M
+         , prefix(enc(<X,Y>, k)) = enc(X, k)
+
+
+rule Password_init:
+    [ Fr(~pw) ]
+  --[ Init_pw_once() ]->
+    [ !Own(~pw) ]
+
+rule C1:
+let
+	c = enc('g'^~rc,pw)
+in
+    [ !Own(pw),Fr(~rc)]
+  --[ C1_do() ]->
+    [ Out(c),C1_done(~rc,pw) ]
+
+rule S1:
+  let
+    m = dec(c,pw)
+    key = m^~rs
+  in
+    [ !Own(pw),Fr(~rs),In(c),Fr(~nonce)]
+  --[ S1_do() ]->
+    [ Out(<enc('g'^~rs,pw),enc(~nonce,key)>),S1_done(key,~rs,pw,~nonce) ,!S1(key)]
+
+rule C2:
+  let
+  	m1 = dec(c1,pw)
+  	key = m1^rc
+  	s_nonce = dec(c2,key)
+  	c = enc(<s_nonce,~c_nonce>,key)
+  in
+    [ C1_done(rc,pw),In(<c1,c2>) ,Fr(~c_nonce)]
+  --[ C2_do()]->
+    [ Out(c) ,!C2(key)]
+
+
+rule S3:
+let
+	ss_nonce = fst(dec(c,key))
+	c_nonce = snd(dec(c,key))
+	c = enc(c_nonce,key)
+in
+    [ In(c),S1_done(key,rs,pw,s_nonce)]
+  --[ Eq(ss_nonce,s_nonce),S2() ]->
+    [ Out(c)]
+
+
+rule Attack_test:
+    [ In(c),In(m),!Own(pw) ]
+  --[ Eq(c,enc(m,pw)),Attack_suc() ]->
+    [ ]
+/*
+rule Attack_test2:
+    [ In(c),In(m),!C2(key) ]
+  --[ Eq(c,senc(m,key)),Attack_suc() ]->
+    [ ]
+
+
+rule Attack_test3:
+    [ In(c),In(m),!S1(key)]
+  --[ Eq(c,senc(m,key)),Attack_suc() ]->
+    [ ]*/
+
+restriction Verif:
+"
+    All x y #i. Eq(x,y) @ i ==> x = y
+"
+restriction Init:
+" 
+   All #i #j. Init_pw_once()@i & Init_pw_once()@j ==> #i=#j
+"
+/*
+lemma Exe:
+exists-trace
+"
+	Ex x #i #j. User_response_done(x)@i & Finish(x)@j
+"*/
+
+
+lemma Test:
+exists-trace
+"
+	Ex #j. Attack_suc()@j
+"
+
+end

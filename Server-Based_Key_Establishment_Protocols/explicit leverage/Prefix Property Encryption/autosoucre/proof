@@ -1,0 +1,35 @@
+
+$ time tamarin-prover --prove --auto-source KerberosBasic.spthy ^C
+
+
+==============================================================================
+summary of summaries:
+
+analyzed: KerberosBasic.spthy
+
+  AUTO_typing (all-traces): verified (1 steps)
+  Test2 (exists-trace): verified (7 steps)
+
+==============================================================================
+
+
+real	0m50.140s
+user	2m45.054s
+sys	0m22.899s
+
+
+$ time tamarin-prover --prove --auto-source --bound=20 Wide_Mouthed_Frog.spthy 
+
+==============================================================================
+summary of summaries:
+
+analyzed: Wide_Mouthed_Frog.spthy
+
+  AUTO_typing (all-traces): falsified - found trace (7 steps)
+  Test (exists-trace): falsified - no trace found (575 steps)
+
+==============================================================================
+
+real	3m5.338s
+user	5m7.686s
+sys	0m23.491s

@@ -1,0 +1,208 @@
+
+==============================================================================
+summary of summaries:
+
+analyzed: Bellare-Rogaway_3PKD.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m0.243s
+user	0m0.424s
+sys	0m0.123s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Boyd_key_agreement.spthy
+
+  Test (exists-trace): verified (8 steps)
+
+==============================================================================
+
+real	0m0.363s
+user	0m0.683s
+sys	0m0.223s
+    !KU( enc(<<<$B.17, x.32>, x.33>, t.16>, ~k.52) ) @ #vk.74
+  solved goal nr. 245 (precomputed):
+    !KU( enc(<<<$B.18, x.34>, x.35>, t.17>, ~k.55) ) @ #vk.78
+  solved goal nr. 255 (precomputed):
+    !KU( enc(<<<$B.19, x.36>, x.37>, t.18>, ~k.58) ) @ #vk.82
+  solved goal nr. 265 (precomputed):
+    !KU( enc(<<<$B.20, x.38>, x.39>, t.19>, ~k.61) ) @ #vk.86
+  solved goal nr. 275 (precomputed):
+    !KU( enc(<<<$B.21, x.40>, x.41>, t.20>, ~k.64) ) @ #vk.90
+
+real	1m0.025s
+user	2m14.265s
+sys	0m33.842s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Gong_nonce.spthy
+
+  Test (exists-trace): falsified - no trace found (12 steps)
+
+==============================================================================
+
+real	0m0.253s
+user	0m0.426s
+sys	0m0.052s
+  solved goal nr. 103 (precomputed): !KU( ~k.19 ) @ #vk.53
+  solved goal nr. 105 (precomputed): !KU( ~k.21 ) @ #vk.51
+  solved goal nr. 109 (precomputed): !KU( ~k.21 ) @ #vk.55
+  solved goal nr. 107 (precomputed): !KU( ~k.19 ) @ #vk.57
+  solved goal nr. 97 (precomputed): !KU( ~k.17 ) @ #vk.51
+  solved goal nr. 101 (precomputed): !KU( ~k.17 ) @ #vk.55
+  solved goal nr. 109 (precomputed): !KU( ~k.21 ) @ #vk.55
+  solved goal nr. 103 (precomputed): !KU( ~k.19 ) @ #vk.53
+  solved goal nr. 107 (precomputed): !KU( ~k.19 ) @ #vk.57
+
+real	1m0.070s
+user	2m55.360s
+sys	0m32.862s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Janson_Tsudik_3PKDP_optimised.spthy
+
+  Test (exists-trace): verified (12 steps)
+
+==============================================================================
+
+real	0m3.194s
+user	0m7.167s
+sys	0m1.647s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Janson_Tsudik_3PKDP.spthy
+
+  Test (exists-trace): falsified - no trace found (1014 steps)
+
+==============================================================================
+
+real	0m4.605s
+user	0m10.225s
+sys	0m2.505s
+    !KU( senc(<snd(~T), z.2>, $C.2) ) @ #vk.23
+  solved goal nr. 39 (precomputed):
+    !KU( senc(<z.3, x.1>, ~Key_XY.3) ) @ #vk.22
+  solved goal nr. 39 (precomputed):
+    !KU( senc(<z.3, x.2>, ~Key_XY.4) ) @ #vk.24
+  solved goal nr. 39 (precomputed):
+    !KU( senc(<z.3, x.2>, ~Key_XY.4) ) @ #vk.24
+  solved goal nr. 39 (precomputed):
+    !KU( senc(<z.3, x.2>, ~Key_XY.4) ) @ #vk.24
+
+real	1m0.171s
+user	3m10.129s
+sys	0m31.987s
+
+==============================================================================
+summary of summaries:
+
+analyzed: needham_schroeder_symmetric.spthy
+
+  Test2 (exists-trace): verified (8 steps)
+
+==============================================================================
+
+real	0m0.998s
+user	0m2.544s
+sys	0m0.510s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Otway_Rees_mod_A_N.spthy
+
+  Test (exists-trace): falsified - no trace found (10 steps)
+
+==============================================================================
+
+real	0m0.153s
+user	0m0.181s
+sys	0m0.073s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Otway_Rees_mod_Burrows.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.224s
+user	0m0.399s
+sys	0m0.074s
+  solved goal nr. 73 (precomputed): !KU( ~k.5 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.5 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 73 (precomputed): !KU( ~k.6 ) @ #vk.42
+  solved goal nr. 87 (precomputed): !KU( ~k.7 ) @ #vk.52
+
+real	1m0.243s
+user	2m50.385s
+sys	0m58.901s
+  solved goal nr. 247 (precomputed): !KU( ~k.57 ) @ #vk.123
+  solved goal nr. 255 (precomputed): !KU( ~k.59 ) @ #vk.127
+  solved goal nr. 263 (precomputed): !KU( ~k.61 ) @ #vk.131
+  solved goal nr. 271 (precomputed): !KU( ~k.63 ) @ #vk.135
+  solved goal nr. 279 (precomputed): !KU( ~k.65 ) @ #vk.139
+  solved goal nr. 287 (precomputed): !KU( ~k.67 ) @ #vk.143
+  solved goal nr. 295 (precomputed): !KU( ~k.69 ) @ #vk.147
+  solved goal nr. 303 (precomputed): !KU( ~k.71 ) @ #vk.151
+  solved goal nr. 311 (precomputed): !KU( ~k.73 ) @ #vk.155
+
+real	1m0.007s
+user	1m38.732s
+sys	0m32.670s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Woo-Lam.spthy
+
+  Test (exists-trace): verified (5 steps)
+
+==============================================================================
+
+real	0m0.654s
+user	0m1.301s
+sys	0m0.201s
+
+==============================================================================
+summary of summaries:
+
+analyzed: Yahalom_Bur.spthy
+
+  Test (exists-trace): verified (4 steps)
+
+==============================================================================
+
+real	0m0.144s
+user	0m0.231s
+sys	0m0.051s
+    !KU( enc(<x.4, x.6, z.1>, ~k.3) ) @ #vk.20
+  solved goal nr. 37 (precomputed):
+    !KU( enc(<x.4, x.6, z.1>, ~k.3) ) @ #vk.20
+  solved goal nr. 37 (precomputed):
+    !KU( enc(<x.4, x.6, z.1>, ~k.3) ) @ #vk.20
+  solved goal nr. 37 (precomputed):
+    !KU( enc(<x.4, x.6, z.1>, ~k.3) ) @ #vk.20
+  solved goal nr. 54 (precomputed): !KU( ~k.9 ) @ #vk.27
+  solved goal nr. 54 (precomputed): !KU( ~k.9 ) @ #vk.27
+
+real	1m0.285s
+user	2m31.552s
+sys	1m22.385s
