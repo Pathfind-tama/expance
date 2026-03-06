@@ -1,4 +1,4 @@
-# Adversary Leverage Detection in Cryptographic Protocols: A Tamarin-Based Automated Analysis Framework
+# Adversary Leverage Detection in Cryptographic Protocols: A Tamarin-Based Formal Analysis Artifact
 
 This repository contains the complete formal verification artifact accompanying the paper *"Automated Detection of Adversary Leverage in Cryptographic Protocols"*. We systematically model and verify adversary leverage — a class of protocol weaknesses that allows an active adversary to exploit honest participants as oracles — across a large corpus of real-world cryptographic protocols using the [Tamarin prover](https://github.com/tamarin-prover/tamarin-prover).
 
@@ -8,7 +8,7 @@ This repository contains the complete formal verification artifact accompanying 
 
 Classical security analysis focuses on what an adversary *learns* or *impersonates*. Adversary leverage addresses a complementary and often overlooked threat: situations in which the adversary can *steer* honest protocol participants into performing cryptographic operations on adversary-chosen inputs, effectively turning them into decryption, authentication, or signing oracles.
 
-This framework encodes two categories of leverage as reachability and indistinguishability queries in Tamarin:
+Our formalism encodes two categories of leverage as reachability and indistinguishability queries in Tamarin:
 
 | Category | Sub-type | Description |
 |---|---|---|
@@ -167,7 +167,7 @@ Notable findings:
 
 ---
 
-## Extending the Framework
+## Extending the Analysis
 
 To analyze a new protocol, create a `.spthy` file following the existing model structure:
 
